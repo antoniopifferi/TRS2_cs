@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
     <AssemblyName>TRS2</AssemblyName>
+    <RootNamespace>TRS2</RootNamespace>
     <Title>TRS2</Title>
     <Product>TRS2</Product>
     <Nullable>enable</Nullable>
@@ -13,6 +14,18 @@
 
   <ItemGroup>
     <ApplicationDefinition Include="src\gui\App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\gui\pages\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".github\copilot-instructions.md" />
   </ItemGroup>
 
 </Project>

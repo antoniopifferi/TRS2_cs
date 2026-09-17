@@ -1,7 +1,7 @@
-<Application x:Class="TRS2_cs.App"
+<Application x:Class="TRS2.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:TRS2_cs"
+             xmlns:local="clr-namespace:TRS2"
              StartupUri="src/gui/MainWindow.xaml">
     <Application.Resources>
 

@@ -2,7 +2,7 @@ using System.Configuration;
 using System.Data;
 using System.Windows;
 
-namespace TRS2_cs
+namespace TRS2
 {
     /// <summary>
     /// Interaction logic for App.xaml

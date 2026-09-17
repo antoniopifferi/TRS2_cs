@@ -1,0 +1,30 @@
+<Page x:Class="TRS2.ParmPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:controls="clr-namespace:TRS2"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Title="ParmPage">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+        <WrapPanel Margin="20"
+                   Orientation="Horizontal"
+                   ItemWidth="380">
+            <controls:FormGroup Header="Group1">
+                <StackPanel>
+                    <controls:IntBox Label="Int1" Value="{Binding Group1.Int1}" />
+                    <controls:DoubleBox Label="Double1" Value="{Binding Group1.Double1}" />
+                    <controls:StringBox Label="String1" Value="{Binding Group1.String1}" />
+                </StackPanel>
+            </controls:FormGroup>
+            <controls:FormGroup Header="Group2">
+                <StackPanel>
+                    <controls:IntBox Label="Int2" Value="{Binding Group2.Int2}" />
+                    <controls:DoubleBox Label="Double2" Value="{Binding Group2.Double2}" />
+                    <controls:StringBox Label="String2" Value="{Binding Group2.String2}" />
+                </StackPanel>
+            </controls:FormGroup>
+        </WrapPanel>
+    </ScrollViewer>
+</Page>

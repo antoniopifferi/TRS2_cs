@@ -1,12 +1,26 @@
-<Window x:Class="TRS2_cs.MainWindow"
+<Window x:Class="TRS2.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TRS2_cs"
+        xmlns:local="clr-namespace:TRS2"
         mc:Ignorable="d"
         Title="TRS2" Height="450" Width="800">
     <Grid>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="Window">
+                <MenuItem Header="Parm" Click="OpenParmPage" />
+                <MenuItem Header="Step" Click="OpenStepPage" />
+            </MenuItem>
+            <MenuItem Header="Action">
+                <MenuItem Header="Oscilloscope" Click="RunOscilloscope" />
+                <MenuItem Header="Measure" Click="RunMeasure" />
+            </MenuItem>
+        </Menu>
+        <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden" />
     </Grid>
 </Window>
