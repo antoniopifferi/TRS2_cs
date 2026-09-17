@@ -4,7 +4,7 @@ namespace TRS2
 {
     public static partial class Out
     {
-        public static Group2Data Group2 { get; } = new();
+        public static Group2Data Group2 = new();
 
         public partial class Group2Data : ObservableObject
         {

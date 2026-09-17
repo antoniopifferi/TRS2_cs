@@ -1,0 +1,8 @@
+<UserControl x:Class="TRS2.ChoiceCell"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Name="root">
+    <ComboBox Padding="2"
+              ItemsSource="{Binding Choices, ElementName=root}"
+              SelectedItem="{Binding Value, ElementName=root, Mode=TwoWay}" />
+</UserControl>
