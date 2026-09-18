@@ -8,7 +8,7 @@ namespace TRS2
 
         public static Group3Data Group3 = new();
 
-        public static List<LoopData> Loop = CreateLoop();
+        public static LoopData[] Loop = new LoopData[Konst.MAX_LOOP];
 
         public class Group1Data
         {
@@ -35,18 +35,6 @@ namespace TRS2
             public bool Break { get; set; }
             public bool Invert { get; set; }
             public string Cont { get; set; } = "NONE";
-        }
-
-        private static List<LoopData> CreateLoop()
-        {
-            var loop = new List<LoopData>();
-
-            for (var i = 0; i < Konst.MAX_LOOP; i++)
-            {
-                loop.Add(new LoopData());
-            }
-
-            return loop;
         }
     }
 }
