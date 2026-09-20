@@ -11,6 +11,20 @@ namespace TRS2
 
         public Set.LoopData[] Loop { get; } = Set.Loop;
 
+        public IEnumerable<GroupRowDefinition> Group1Rows { get; } =
+        [
+            new("Int1", CellKind.Int, nameof(Set.Group1Data.Int1)),
+            new("Double1", CellKind.Double, nameof(Set.Group1Data.Double1)),
+            new("String1", CellKind.String, nameof(Set.Group1Data.String1))
+        ];
+
+        public IEnumerable<GroupRowDefinition> Group2Rows { get; } =
+        [
+            new("Int2", CellKind.Int, nameof(Out.Group2Data.Int2)),
+            new("Double2", CellKind.Double, nameof(Out.Group2Data.Double2)),
+            new("String2", CellKind.String, nameof(Out.Group2Data.String2))
+        ];
+
         public IEnumerable<GroupRowDefinition> LoopRows { get; } =
         [
             new("Home", CellKind.Int, nameof(Set.LoopData.Home)),
@@ -28,6 +42,11 @@ namespace TRS2
         {
             InitializeComponent();
             DataContext = this;
+        }
+
+        private void CheckCell_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+
         }
     }
 }

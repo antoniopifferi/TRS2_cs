@@ -10,21 +10,13 @@
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel Margin="20" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
-                <controls:FormGroup Header="Group1">
-                    <StackPanel>
-                        <controls:IntBox Label="Int1" Value="{Binding Group1.Int1}" />
-                        <controls:DoubleBox Label="Double1" Value="{Binding Group1.Double1}" />
-                        <controls:StringBox Label="String1" Value="{Binding Group1.String1}" />
-                    </StackPanel>
-                </controls:FormGroup>
+                <controls:ColumnGroup Header="Group1"
+                                      DataItem="{Binding Group1}"
+                                      Rows="{Binding Group1Rows}" />
 
-                <controls:FormGroup Header="Group2">
-                    <StackPanel>
-                        <controls:IntBox Label="Int2" Value="{Binding Group2.Int2}" />
-                        <controls:DoubleBox Label="Double2" Value="{Binding Group2.Double2}" />
-                        <controls:StringBox Label="String2" Value="{Binding Group2.String2}" />
-                    </StackPanel>
-                </controls:FormGroup>
+                <controls:ColumnGroup Header="Group2"
+                                      DataItem="{Binding Group2}"
+                                      Rows="{Binding Group2Rows}" />
             </StackPanel>
 
             <controls:TableGroup Header="Loop"

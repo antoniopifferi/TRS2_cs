@@ -11,11 +11,9 @@
         <WrapPanel Margin="20"
                    Orientation="Horizontal"
                    ItemWidth="380">
-            <controls:FormGroup Header="Group3">
-                <StackPanel>
-                    <controls:StringBox Label="String3" Value="{Binding Group3.String3}" />
-                </StackPanel>
-            </controls:FormGroup>
+            <controls:ColumnGroup Header="Group3"
+                                  DataItem="{Binding Group3}"
+                                  Rows="{Binding Group3Rows}" />
         </WrapPanel>
     </ScrollViewer>
 </Page>

@@ -60,7 +60,7 @@ namespace TRS2
             var grid = new Grid();
 
             grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(80) });
-            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            grid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(90) });
 
             for (var rowIndex = 0; rowIndex < rows.Count; rowIndex++)
             {
