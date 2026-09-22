@@ -35,6 +35,7 @@ namespace TRS2
         private void RunOscilloscope(object sender, RoutedEventArgs e)
         {
             Out.Group2.Int2 = Set.Group1.Int1;
+            Run.Oscill();
         }
 
         private void RunMeasure(object sender, RoutedEventArgs e)
