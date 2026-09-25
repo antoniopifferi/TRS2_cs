@@ -7,10 +7,10 @@ namespace TRS2
 
     public class Data(int numElem, int numSlice, int numAcq)
     {
-        public readonly TypeData[] RingData = new TypeData[numAcq * numElem];
-        public readonly TypeData[] ArchiveData = new TypeData[numSlice * numElem];
-        public readonly TypeData[] Temp = new TypeData[numElem];
-        public long Produced, Consumed, Dropped;
+        TypeData[] RingData = new TypeData[numAcq * numElem];
+        TypeData[] ArchiveData = new TypeData[numSlice * numElem];
+        TypeData[] Temp = new TypeData[numElem];
+        public long Produced=0, Consumed=0, Dropped=0;
 
         public Span<TypeData> Ring(int slot) =>
             RingData.AsSpan(slot * numElem, numElem);

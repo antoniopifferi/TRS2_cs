@@ -10,21 +10,26 @@
                   HorizontalScrollBarVisibility="Disabled">
         <StackPanel Margin="20" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
-                <controls:ColumnGroup Header="Group1"
-                                      DataItem="{Binding Group1}"
-                                      Rows="{Binding Group1Rows}" />
-
-                <controls:ColumnGroup Header="Group2"
-                                      DataItem="{Binding Group2}"
-                                      Rows="{Binding Group2Rows}" />
-            </StackPanel>
-
-            <controls:TableGroup Header="Loop"
+                <controls:TableGroup Header="Loop"
                                  Margin="0,0,20,12"
                                  CornerText="Parameter"
                                  ColumnHeaderPrefix="Loop "
                                  ItemsSource="{Binding Loop}"
                                  Rows="{Binding LoopRows}" />
+                <controls:ColumnGroup Header="Spc"
+                      DataItem="{Binding Spc}"
+                      Rows="{Binding SpcRows}" />
+
+            </StackPanel>
+            <controls:ColumnGroup Header="Group1"
+                                      DataItem="{Binding Group1}"
+                                      Rows="{Binding Group1Rows}" />
+
+            <controls:ColumnGroup Header="Group2"
+                                      DataItem="{Binding Group2}"
+                                      Rows="{Binding Group2Rows}" />
+
+
         </StackPanel>
     </ScrollViewer>
 </Page>

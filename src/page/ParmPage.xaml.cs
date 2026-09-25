@@ -9,6 +9,8 @@ namespace TRS2
 
         public Out.Group2Data Group2 { get; } = Out.Group2;
 
+        public Set.SpcData Spc { get; } = Set.Spc;
+
         public Set.LoopData[] Loop { get; } = Set.Loop;
 
         public IEnumerable<GroupRowDefinition> Group1Rows { get; } =
@@ -23,6 +25,17 @@ namespace TRS2
             new("Int2", CellKind.Int, nameof(Out.Group2Data.Int2)),
             new("Double2", CellKind.Double, nameof(Out.Group2Data.Double2)),
             new("String2", CellKind.String, nameof(Out.Group2Data.String2))
+        ];
+
+        public IEnumerable<GroupRowDefinition> SpcRows { get; } =
+        [
+            new("Int1", CellKind.Int, nameof(Set.SpcData.Int1)),
+            new("Type", CellKind.String, nameof(Set.SpcData.Type)),
+            new("Wait", CellKind.String, nameof(Set.SpcData.Wait)),
+            new("TimeMeas", CellKind.Double, nameof(Set.SpcData.TimeMeas)),
+            new("TimeOscill", CellKind.Double, nameof(Set.SpcData.TimeOscill)),
+            new("NumBins", CellKind.Int, nameof(Set.SpcData.NumBins)),
+            new("BinWidth", CellKind.Double, nameof(Set.SpcData.BinWidth))
         ];
 
         public IEnumerable<GroupRowDefinition> LoopRows { get; } =
