@@ -7,6 +7,7 @@ namespace TRS2
 	public static class Run
 	{
         private static Data? data;
+        private static Spc? spc;
 
         private static class Action
         {

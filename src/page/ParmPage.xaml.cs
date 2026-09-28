@@ -35,7 +35,9 @@ namespace TRS2
             new("TimeMeas", CellKind.Double, nameof(Set.SpcData.TimeMeas)),
             new("TimeOscill", CellKind.Double, nameof(Set.SpcData.TimeOscill)),
             new("NumBins", CellKind.Int, nameof(Set.SpcData.NumBins)),
-            new("BinWidth", CellKind.Double, nameof(Set.SpcData.BinWidth))
+            new("BinWidth", CellKind.Double, nameof(Set.SpcData.BinWidth)),
+            new("NumDet", CellKind.Int, nameof(Set.SpcData.NumDet)),
+            new("NumBoard", CellKind.Int, nameof(Set.SpcData.NumBoard)) 
         ];
 
         public IEnumerable<GroupRowDefinition> LoopRows { get; } =

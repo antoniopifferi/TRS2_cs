@@ -33,6 +33,8 @@ namespace TRS2
             public double TimeOscill { get; set; } = 1.0;
             public int NumBins { get; set; } = 4096;
             public double BinWidth { get; set; } = 10.0;
+            public int NumDet { get; set; } = 1;
+            public int NumBoard { get; set; } = 1;
         }
 
         public class LoopData

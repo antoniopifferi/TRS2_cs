@@ -1,17 +1,41 @@
-//module;                              // global module fragment (for legacy includes)
-//#include "src/gui/AppLogger.h"
+namespace TRS2
+{
+    public abstract class Spc
+    {
+        public void Init()
+        {
+            InitDev();
+        }
+        //public void Close()
+        //{
+        //    Stop();
+        //    CloseDev();
+        //}
+        //public void Start(float seconds)
+        //{
+        //    SetTime(seconds);
+        //    acquisition = new Thread(() => RunAcquire());
+        //    acquisition.Start();
+        //    StartDev();
+        //}
+        //public void Stop()
+        //{
+        //    StopDev();
+        //    if (acquisition != null && acquisition.IsAlive)
+        //        acquisition.Join();
+        //}
 
-//#include <memory>
-//#include <vector>
-//#include <cmath>
-//#include <cstdlib>
-//#include <thread>
+        protected abstract void InitDev();
+        protected abstract void CloseDev();
+        protected abstract void StartDev();
+        protected abstract void StopDev();
+        protected abstract void SetTimeDev(float seconds);
+        protected abstract void WaitDev();
+        protected abstract void GetDev();
 
-//export module Spc;
+    }
+}
 
-//import Const;
-//import Globals;
-//import Data;
 
 //export
 //{
