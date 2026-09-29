@@ -1,29 +1,86 @@
+using System;
+using System.Threading;
+
 namespace TRS2
 {
     public abstract class Spc
     {
+        private readonly Data data;
+
+        private Thread? acquisition;
+        private volatile bool running;
+        protected uint[] Buffer = [];
+
+        protected Spc()
+        {
+        }
+
         public void Init()
         {
             InitDev();
         }
-        //public void Close()
-        //{
-        //    Stop();
-        //    CloseDev();
-        //}
-        //public void Start(float seconds)
-        //{
-        //    SetTime(seconds);
-        //    acquisition = new Thread(() => RunAcquire());
-        //    acquisition.Start();
-        //    StartDev();
-        //}
-        //public void Stop()
-        //{
-        //    StopDev();
-        //    if (acquisition != null && acquisition.IsAlive)
-        //        acquisition.Join();
-        //}
+
+        public void Start(float seconds)
+        {
+            SetTimeDev(seconds);
+
+            running = true;
+            acquisition = new Thread(Acquire)
+            {
+                IsBackground = true
+            };
+            acquisition.Start();
+        }
+
+        public void Stop()
+        {
+            running = false;
+
+            // StopDev should also unblock WaitDev if it is waiting on hardware.
+            StopDev();
+
+            acquisition?.Join();
+            acquisition = null;
+        }
+
+        public void Close()
+        {
+            Stop();
+            CloseDev();
+        }
+
+        private void Acquire()
+        {
+            while (running)
+            {
+                // One device acquisition.
+                // For TestSpc this can be empty; for MultiHarp it can start a single shot.
+                StartDev();
+                WaitDev();
+
+                if (!running)
+                    break;
+
+                GetDev();
+
+                long n = Volatile.Read(ref data.Produced);
+
+                // Ring full: wait until the consumer frees one slot.
+                while (running &&
+                       n - Volatile.Read(ref data.Consumed) >= data.NumAcq)
+                {
+                    Thread.Yield();
+                }
+
+                if (!running)
+                    break;
+
+                Buffer.AsSpan().CopyTo(data.Ring((int)(n % data.NumAcq)));
+
+                // Publish only after the slot is completely written.
+                Volatile.Write(ref data.Produced, n + 1);
+            }
+        }
 
         protected abstract void InitDev();
         protected abstract void CloseDev();

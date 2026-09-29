@@ -10,5 +10,6 @@ namespace TRS2
         public const double TEST_V = 0.03; // cm/ps
         public const double TEST_AREA = 1000000;
         public const double TEST_NOISE = 0.1;
+        public const int RAND_MAX = 32767;
     }
 }

@@ -58,7 +58,22 @@ namespace TRS2
             //GUI->displayPanel("Output");
 
             initLoop();
-            data= new Data(Set.Spc.NumBins, 128, 512);
+
+            // initData();
+            int numElem = Set.Spc.NumBoard * Set.Spc.NumDet * Set.Spc.NumBins;
+            int NumAcq = 512;
+            data = new Data(numElem,Set.Loop[4].Num,NumAcq);
+
+            // initSpc();
+            spc = Set.Spc.Type switch
+            {
+                "TEST" => new SpcTest()
+                // "MHARP" => new SpcMharp(data),
+            };
+            spc.Init();
+
+
+
             //initSteps();
             //initSpc();
             //InitDataFile();
