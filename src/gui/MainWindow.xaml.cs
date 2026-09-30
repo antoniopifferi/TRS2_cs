@@ -40,7 +40,7 @@ namespace TRS2
 
         private void RunMeasure(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Measure started.", "TRS2", MessageBoxButton.OK, MessageBoxImage.Information);
+            Run.Measure();
         }
     }
 }

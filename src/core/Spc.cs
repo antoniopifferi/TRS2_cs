@@ -20,7 +20,7 @@ namespace TRS2
             InitDev();
         }
 
-        public void Start(float seconds)
+        public void Start(double seconds)
         {
             SetTimeDev(seconds);
 
@@ -86,7 +86,7 @@ namespace TRS2
         protected abstract void CloseDev();
         protected abstract void StartDev();
         protected abstract void StopDev();
-        protected abstract void SetTimeDev(float seconds);
+        protected abstract void SetTimeDev(double seconds);
         protected abstract void WaitDev();
         protected abstract void GetDev();
 

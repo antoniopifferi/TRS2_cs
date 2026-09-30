@@ -5,6 +5,8 @@ namespace TRS2
 {
     public class SpcTest : Spc
     {
+        private double _seconds;
+
         protected override void InitDev()
         {
             // Initialization logic for the test SPC device
@@ -21,9 +23,10 @@ namespace TRS2
         {
             // Stop acquisition logic for the test SPC device
         }
-        protected override void SetTimeDev(float seconds)
+        protected override void SetTimeDev(double seconds)
         {
             // Set acquisition time logic for the test SPC device
+            _seconds = seconds;
         }
         protected override void WaitDev()
         {
@@ -57,7 +60,7 @@ namespace TRS2
                 }
                 for (int ib = 0; ib < numBins; ib++)
                 {
-                    double timeA = isOsc ? Set.Spc.TimeOscill : Set.Spc.TimeMeas;
+                    double timeA = _seconds;
                     double value = Konst.TEST_AREA * timeA / area * dataD[ib];
                     value *= 1 - Konst.TEST_NOISE + Konst.TEST_NOISE * (2.0 * Random.Shared.NextDouble()-1.0);
                     Buffer[ib + (id * numBins)] = (TypeData)value;
