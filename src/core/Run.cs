@@ -101,7 +101,7 @@ namespace TRS2
             // initSpc();
             spc = Set.Spc.Type switch
             {
-                "TEST" => new SpcTest()
+                "NONE" => new SpcTest()
                 // "MHARP" => new SpcMharp(data),
             };
             spc.Init();
