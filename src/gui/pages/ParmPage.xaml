@@ -14,15 +14,6 @@
                    Orientation="Horizontal"
                    VerticalAlignment="Top">
 
-            <!-- ======================================================
-                 ARRAY CLASS: LOOP
-
-                 For future array classes, copy this pattern:
-                   1. one DataGrid ItemsSource line
-                   2. one compact line per member/column
-
-                 All formatting is inherited from App.xaml.
-                 ====================================================== -->
 
             <GroupBox Header="Loop">
                 <DataGrid ItemsSource="{x:Static local:Set.Loop}">
@@ -42,17 +33,11 @@
             </GroupBox>
 
 
-            <!-- ======================================================
-                 SINGLE OBJECT: SPC
-
-                 One parameter = one XAML line.
-                 ====================================================== -->
-
             <GroupBox Header="Spc"
                       DataContext="{x:Static local:Set.Spc}">
                 <StackPanel>
                     <local:ParmRow Header="Int1"><TextBox Text="{Binding Int1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                    <local:ParmRow Header="Type"><TextBox Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="Type"><ComboBox SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content"><ComboBoxItem Content="NONE" /><ComboBoxItem Content="TEST" /></ComboBox></local:ParmRow>
                     <local:ParmRow Header="Wait"><TextBox Text="{Binding Wait, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
                     <local:ParmRow Header="TimeMeas"><TextBox Text="{Binding TimeMeas, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
                     <local:ParmRow Header="TimeOscill"><TextBox Text="{Binding TimeOscill, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
@@ -64,10 +49,6 @@
             </GroupBox>
 
 
-            <!-- ======================================================
-                 SINGLE OBJECT: GROUP 1
-                 ====================================================== -->
-
             <GroupBox Header="Group1"
                       DataContext="{x:Static local:Set.Group1}">
                 <StackPanel>
@@ -77,10 +58,6 @@
                 </StackPanel>
             </GroupBox>
 
-
-            <!-- ======================================================
-                 SINGLE OBJECT: GROUP 2 (kept from your existing GUI)
-                 ====================================================== -->
 
             <GroupBox Header="Group2"
                       DataContext="{x:Static local:Out.Group2}">

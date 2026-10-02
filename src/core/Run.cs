@@ -43,15 +43,6 @@ namespace TRS2
             Action.displayPlot = true;
         }
 
-        private static void initLoop()
-        {
-            for (int iL = 0; iL < Konst.MAX_LOOP; iL++)
-            {
-                Set.Loop[iL].Num = (Set.Loop[iL].Last - Set.Loop[iL].First) / Set.Loop[iL].Delta + 1;
-            }
-        }
-
-
         private static void loopGet(int loop)
         {
             int l = loop;
@@ -91,8 +82,6 @@ namespace TRS2
             //GUI->readAll();
             //GUI->displayPanel("Output");
 
-            initLoop();
-
             // initData();
             int numElem = Set.Spc.NumBoard * Set.Spc.NumDet * Set.Spc.NumBins;
             int NumAcq = 512;
@@ -101,10 +90,10 @@ namespace TRS2
             // initSpc();
             spc = Set.Spc.Type switch
             {
-                "NONE" => new SpcTest()
-                // "MHARP" => new SpcMharp(data),
+                "TEST" => new SpcTest(),
+                "NONE" => null // No SPC device selected, do nothing
             };
-            spc.Init();
+            spc?.Init();
 
 
 
@@ -124,7 +113,7 @@ namespace TRS2
                 decideAction();
                 //    if (P.Action.Oscill) Oscilloscope();
                 //    if (P.Action.moveStep) moveStep();
-                if (Action.startSpc) spc.Start(Set.Spc.TimeMeas);
+                if (Action.startSpc) spc?.Start(Set.Spc.TimeMeas);
                 if (Action.copyArchive) data.CopyArchive(loop);
                 if (Action.copyTemp) data.CopyTemp();
 
