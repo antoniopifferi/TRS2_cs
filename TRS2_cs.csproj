@@ -13,9 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="src\gui\controls\**" />
     <Compile Remove="src\temp\**" />
+    <EmbeddedResource Remove="src\gui\controls\**" />
     <EmbeddedResource Remove="src\temp\**" />
+    <None Remove="src\gui\controls\**" />
     <None Remove="src\temp\**" />
+    <Page Remove="src\gui\controls\**" />
     <Page Remove="src\temp\**" />
   </ItemGroup>
 
