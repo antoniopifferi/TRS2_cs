@@ -2,18 +2,38 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:controls="clr-namespace:TRS2"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:TRS2"
       mc:Ignorable="d"
       Title="StepPage">
+
     <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
-        <WrapPanel Margin="20"
+                  HorizontalScrollBarVisibility="Auto">
+
+        <WrapPanel Margin="4"
                    Orientation="Horizontal"
-                   ItemWidth="380">
-            <controls:ColumnGroup Header="Group3"
-                                  DataItem="{Binding Group3}"
-                                  Rows="{Binding Group3Rows}" />
+                   VerticalAlignment="Top">
+
+            <GroupBox Header="Group3"
+                      DataContext="{x:Static local:Set.Group3}">
+                <StackPanel>
+                    <local:ParmRow Header="String3"><TextBox Text="{Binding String3, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                </StackPanel>
+            </GroupBox>
+
+            <!--
+                Future array example:
+
+                <GroupBox Header="My array">
+                    <DataGrid ItemsSource="{x:Static local:Set.MyArray}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="A" Binding="{Binding A, UpdateSourceTrigger=PropertyChanged}" />
+                            <DataGridTextColumn Header="B" Binding="{Binding B, UpdateSourceTrigger=PropertyChanged}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+            -->
+
         </WrapPanel>
     </ScrollViewer>
 </Page>

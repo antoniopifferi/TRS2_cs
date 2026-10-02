@@ -2,9 +2,9 @@ using System.Windows.Controls;
 
 namespace TRS2
 {
-    public partial class ParmPage : Page
+    public partial class DisplayPage : Page
     {
-        public ParmPage()
+        public DisplayPage()
         {
             InitializeComponent();
         }

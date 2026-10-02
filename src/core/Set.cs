@@ -6,8 +6,8 @@ namespace TRS2
         public static Group3Data Group3 { get; } = new();
         public static SpcData Spc { get; } = new();
 
+        // The array and every LoopData element are created once at startup.
         public static LoopData[] Loop { get; } = CreateLoops();
-
 
         private static LoopData[] CreateLoops()
         {
@@ -19,7 +19,6 @@ namespace TRS2
             return loops;
         }
 
-
         public class Group1Data
         {
             public int Int1 { get; set; } = 1;
@@ -27,12 +26,10 @@ namespace TRS2
             public string String1 { get; set; } = "Value 1";
         }
 
-
         public class Group3Data
         {
             public string String3 { get; set; } = "Value 3";
         }
-
 
         public class SpcData
         {
@@ -47,7 +44,6 @@ namespace TRS2
             public int NumBoard { get; set; } = 1;
         }
 
-
         public class LoopData
         {
             public LoopData(int number)
@@ -55,16 +51,15 @@ namespace TRS2
                 Number = number;
             }
 
+            // Used only as a convenient row identifier in a DataGrid.
             public int Number { get; }
 
             public int Home { get; set; }
             public int First { get; set; }
             public int Last { get; set; }
             public int Delta { get; set; } = 1;
-
             public int Num { get; set; } = 1;
             public int Actual { get; set; }
-
             public string FileBreak { get; set; } = string.Empty;
             public bool Break { get; set; }
             public bool Invert { get; set; }

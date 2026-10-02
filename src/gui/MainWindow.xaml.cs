@@ -1,19 +1,7 @@
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace TRS2
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -30,6 +18,11 @@ namespace TRS2
         private void OpenStepPage(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(new StepPage());
+        }
+
+        private void OpenDisplayPage(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new DisplayPage());
         }
 
         private void RunOscilloscope(object sender, RoutedEventArgs e)

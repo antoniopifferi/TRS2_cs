@@ -1,15 +1,16 @@
 using System;
 using System.Threading;
+using TypeData = System.UInt32; // 4 bytes
 
 namespace TRS2
 {
     public abstract class Spc
     {
-        private readonly Data data;
+        private readonly Data data=Run.data;
 
         private Thread? acquisition;
         private volatile bool running;
-        protected uint[] Buffer = [];
+        protected TypeData[] Buffer = [];
 
         protected Spc()
         {
@@ -17,6 +18,7 @@ namespace TRS2
 
         public void Init()
         {
+            Buffer = new TypeData[Set.Spc.NumBins * Set.Spc.NumDet * Set.Spc.NumBoard];
             InitDev();
         }
 

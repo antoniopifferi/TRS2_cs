@@ -3,6 +3,7 @@
 ## Project Guidelines
 - User wants all WPF pages stored under the existing folder \src\page.
 - Use CommunityToolkit.Mvvm only where needed for WPF binding, keeping code usage as close as possible to normal variables and very simple.
+- Favor a simple shared-access pattern when appropriate, avoiding repeatedly passing shared objects through every function.
 
 ## GUI Control Requirements
 - Create a reusable table-like group control for the GUI with the following specifications:

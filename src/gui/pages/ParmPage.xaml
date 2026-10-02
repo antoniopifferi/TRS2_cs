@@ -2,34 +2,95 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:controls="clr-namespace:TRS2"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:TRS2"
       mc:Ignorable="d"
       Title="ParmPage">
+
     <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Disabled">
-        <StackPanel Margin="20" Orientation="Vertical">
-            <StackPanel Orientation="Horizontal">
-                <controls:TableGroup Header="Loop"
-                                 Margin="0,0,20,12"
-                                 CornerText="Parameter"
-                                 ColumnHeaderPrefix="Loop "
-                                 ItemsSource="{Binding Loop}"
-                                 Rows="{Binding LoopRows}" />
-                <controls:ColumnGroup Header="Spc"
-                      DataItem="{Binding Spc}"
-                      Rows="{Binding SpcRows}" />
+                  HorizontalScrollBarVisibility="Auto">
 
-            </StackPanel>
-            <controls:ColumnGroup Header="Group1"
-                                      DataItem="{Binding Group1}"
-                                      Rows="{Binding Group1Rows}" />
+        <WrapPanel Margin="4"
+                   Orientation="Horizontal"
+                   VerticalAlignment="Top">
 
-            <controls:ColumnGroup Header="Group2"
-                                      DataItem="{Binding Group2}"
-                                      Rows="{Binding Group2Rows}" />
+            <!-- ======================================================
+                 ARRAY CLASS: LOOP
+
+                 For future array classes, copy this pattern:
+                   1. one DataGrid ItemsSource line
+                   2. one compact line per member/column
+
+                 All formatting is inherited from App.xaml.
+                 ====================================================== -->
+
+            <GroupBox Header="Loop">
+                <DataGrid ItemsSource="{x:Static local:Set.Loop}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Loop"       Binding="{Binding Number}"                                      IsReadOnly="True" Width="50" />
+                        <DataGridTextColumn Header="Home"       Binding="{Binding Home, UpdateSourceTrigger=PropertyChanged}"                    />
+                        <DataGridTextColumn Header="First"      Binding="{Binding First, UpdateSourceTrigger=PropertyChanged}"                   />
+                        <DataGridTextColumn Header="Last"       Binding="{Binding Last, UpdateSourceTrigger=PropertyChanged}"                    />
+                        <DataGridTextColumn Header="Delta"      Binding="{Binding Delta, UpdateSourceTrigger=PropertyChanged}"                   />
+                        <DataGridTextColumn Header="Num"        Binding="{Binding Num}"                                         IsReadOnly="True" />
+                        <DataGridTextColumn Header="File break" Binding="{Binding FileBreak, UpdateSourceTrigger=PropertyChanged}" Width="105" />
+                        <DataGridCheckBoxColumn Header="Break"  Binding="{Binding Break, UpdateSourceTrigger=PropertyChanged}"                   />
+                        <DataGridCheckBoxColumn Header="Invert" Binding="{Binding Invert, UpdateSourceTrigger=PropertyChanged}"                  />
+                        <DataGridTextColumn Header="Cont"       Binding="{Binding Cont, UpdateSourceTrigger=PropertyChanged}"                    />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
 
 
-        </StackPanel>
+            <!-- ======================================================
+                 SINGLE OBJECT: SPC
+
+                 One parameter = one XAML line.
+                 ====================================================== -->
+
+            <GroupBox Header="Spc"
+                      DataContext="{x:Static local:Set.Spc}">
+                <StackPanel>
+                    <local:ParmRow Header="Int1"><TextBox Text="{Binding Int1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="Type"><TextBox Text="{Binding Type, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="Wait"><TextBox Text="{Binding Wait, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="TimeMeas"><TextBox Text="{Binding TimeMeas, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="TimeOscill"><TextBox Text="{Binding TimeOscill, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="NumBins"><TextBox Text="{Binding NumBins, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="BinWidth"><TextBox Text="{Binding BinWidth, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="NumDet"><TextBox Text="{Binding NumDet, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="NumBoard"><TextBox Text="{Binding NumBoard, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                </StackPanel>
+            </GroupBox>
+
+
+            <!-- ======================================================
+                 SINGLE OBJECT: GROUP 1
+                 ====================================================== -->
+
+            <GroupBox Header="Group1"
+                      DataContext="{x:Static local:Set.Group1}">
+                <StackPanel>
+                    <local:ParmRow Header="Int1"><TextBox Text="{Binding Int1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="Double1"><TextBox Text="{Binding Double1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="String1"><TextBox Text="{Binding String1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                </StackPanel>
+            </GroupBox>
+
+
+            <!-- ======================================================
+                 SINGLE OBJECT: GROUP 2 (kept from your existing GUI)
+                 ====================================================== -->
+
+            <GroupBox Header="Group2"
+                      DataContext="{x:Static local:Out.Group2}">
+                <StackPanel>
+                    <local:ParmRow Header="Int2"><TextBox Text="{Binding Int2, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="Double2"><TextBox Text="{Binding Double2, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="String2"><TextBox Text="{Binding String2, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                </StackPanel>
+            </GroupBox>
+
+        </WrapPanel>
     </ScrollViewer>
 </Page>
