@@ -96,6 +96,7 @@ namespace TRS2
             spc?.Init();
 
 
+            Display.Init();
 
             //initSteps();
             //initSpc();
@@ -116,22 +117,12 @@ namespace TRS2
                 if (Action.startSpc) spc?.Start(Set.Spc.TimeMeas);
                 if (Action.copyArchive) data.CopyArchive(loop);
                 if (Action.copyTemp) data.CopyTemp();
-
-                // print on screen the values in the array data.Temp in columns of 10 values per row
-                for (int i = 0; i < data!.Temp.Length; i++)
-                    {
-                    Debug.Write($"{data.Temp[i],10}");
-                    if ((i + 1) % 10 == 0 || i == data.Temp.Length - 1)
-                        {
-                        Debug.WriteLine(string.Empty);
-                        }
-                    }
+                Display.Plot(data.Temp);
 
                 //    if (P.Action.displayPlot) displayPlot(loop);
                 //    if (P.Action.saveData) saveData();
 
                 // MessageBox showing the current loop number and data.Temp[100] value
-                MessageBox.Show($"Current loop: {loop}, data.Temp[100]: {data.Temp[100]}", "TRS2", MessageBoxButton.OK, MessageBoxImage.Information);
 
                 //MessageBox.Show("Running", "TRS2", MessageBoxButton.OK, MessageBoxImage.Information);
                 if (Action.stopSpc) spc.Stop();

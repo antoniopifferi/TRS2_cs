@@ -4,25 +4,34 @@ namespace TRS2
 {
     public partial class MainWindow : Window
     {
+        public ParmPage ParmPage;
+        public StepPage StepPage;
+        public DisplayPage DisplayPage;
+
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new ParmPage());
+
+            ParmPage = new();
+            StepPage = new();
+            DisplayPage = new();
+
+            MainFrame.Navigate(ParmPage);
         }
 
         private void OpenParmPage(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new ParmPage());
+            MainFrame.Navigate(ParmPage);
         }
 
         private void OpenStepPage(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new StepPage());
+            MainFrame.Navigate(StepPage);
         }
 
         private void OpenDisplayPage(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new DisplayPage());
+            MainFrame.Navigate(DisplayPage);
         }
 
         private void RunOscilloscope(object sender, RoutedEventArgs e)
@@ -33,6 +42,7 @@ namespace TRS2
 
         private void RunMeasure(object sender, RoutedEventArgs e)
         {
+            MainFrame.Navigate(DisplayPage);
             Run.Measure();
         }
     }

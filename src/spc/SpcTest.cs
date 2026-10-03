@@ -42,6 +42,9 @@ namespace TRS2
 
             bool isOsc = true;
 
+            // wait for _seconds seconds
+            System.Threading.Thread.Sleep((int)(_seconds * 1000));
+
             for (int id = 0; id < numDet; ++id)
             {
                 double mus = Konst.TEST_MUS / (numDet * numBoard * (1 / 0.3)) * (1 + (2 * (id + (0 * numDet))));

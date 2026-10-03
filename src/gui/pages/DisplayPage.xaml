@@ -4,16 +4,22 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:local="clr-namespace:TRS2"
+      xmlns:ScottPlot="clr-namespace:ScottPlot.WPF;assembly=ScottPlot.WPF"
       mc:Ignorable="d"
       Title="DisplayPage">
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Auto">
+  <ScrollViewer VerticalScrollBarVisibility="Auto"
+                HorizontalScrollBarVisibility="Auto">
 
-        <WrapPanel Margin="4"
-                   Orientation="Horizontal"
-                   VerticalAlignment="Top">
+    <WrapPanel Margin="4"
+               Orientation="Horizontal"
+               VerticalAlignment="Top">
 
-        </WrapPanel>
-    </ScrollViewer>
+      <ScottPlot:WpfPlot x:Name="PlotView"
+                         Width="900"
+                         Height="550"
+                         Margin="4" />
+
+    </WrapPanel>
+  </ScrollViewer>
 </Page>
