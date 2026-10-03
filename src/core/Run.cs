@@ -67,7 +67,6 @@ namespace TRS2
 
         public static void Measure()
         {
-            MessageBox.Show($"Loop4First=: {Set.Loop[4].First}", "TRS2", MessageBoxButton.OK, MessageBoxImage.Information);
 
             // GUI
             //P.Num.Board = 1;
