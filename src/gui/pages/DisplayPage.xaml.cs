@@ -33,12 +33,12 @@ namespace TRS2
             PlotView.Plot.Clear();
 
             Signal = PlotView.Plot.Add.Signal(values);
-            Signal.Data.Period = Set.Spc.BinWidth;
+            //Signal.Data.Period = Set.Spc.BinWidth;
 
-            PlotView.Plot.Axes.SetLimitsY(0, 6);
-            PlotView.Plot.Title("Histogram");
-            PlotView.Plot.XLabel("Time (ps)");
-            PlotView.Plot.YLabel("Counts");
+            //PlotView.Plot.Axes.SetLimitsY(0, 6);
+            //PlotView.Plot.Title("Histogram");
+            //PlotView.Plot.XLabel("Time (ps)");
+            //PlotView.Plot.YLabel("Counts");
             PlotView.Refresh();
         }
 
