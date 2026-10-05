@@ -1,26 +1,20 @@
-﻿namespace TRS2
+﻿using System;
+
+namespace TRS2
 {
     public static class Display
     {
-        public static double[] Values = [];
-        public static event Action<double[]>? Updated;
+        internal static event Action? InitRequested;
+        internal static event Action<uint[]>? Updated;
 
         public static void Init()
         {
-            Values = new double[Set.Spc.NumBins];
+            InitRequested?.Invoke();
         }
 
-        public static void Plot(uint[] data)
+        public static void LogPlot(uint[] data)
         {
-            Values = new double[data.Length];
-
-            for (int i = 0; i < data.Length; i++)
-                if (data[i] > 0)
-                    Values[i] = Math.Log10((double)data[i]);
-                else
-                    Values[i] = -0.1;
-
-            Updated?.Invoke(Values);
+            Updated?.Invoke(data);
         }
     }
 }

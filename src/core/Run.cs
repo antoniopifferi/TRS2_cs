@@ -116,9 +116,8 @@ namespace TRS2
                 if (Action.startSpc) spc?.Start(Set.Spc.TimeMeas);
                 if (Action.copyArchive) data.CopyArchive(loop);
                 if (Action.copyTemp) data.CopyTemp();
-                Display.Plot(data.Temp);
+                if (Action.displayPlot) Display.LogPlot(data.Temp);
 
-                //    if (P.Action.displayPlot) displayPlot(loop);
                 //    if (P.Action.saveData) saveData();
 
                 // MessageBox showing the current loop number and data.Temp[100] value
