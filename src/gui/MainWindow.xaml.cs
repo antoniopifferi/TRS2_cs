@@ -1,4 +1,6 @@
 using System.Windows;
+using System.Threading.Tasks;
+
 
 namespace TRS2
 {
@@ -40,10 +42,10 @@ namespace TRS2
             Run.Oscill();
         }
 
-        private void RunMeasure(object sender, RoutedEventArgs e)
+        private async void RunMeasure(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(DisplayPage);
-            Run.Measure();
+            await Task.Run(Run.Measure);
         }
     }
 }

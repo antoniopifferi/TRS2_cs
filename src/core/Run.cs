@@ -35,9 +35,9 @@ namespace TRS2
                 if (iL == 0) newloop[iL] = false; else newloop[iL] = firstloop[iL - 1];
             }
             Action.Oscill = false;
-            Action.saveData = lastloop[4];
-            Action.startSpc = firstloop[4];
-            Action.stopSpc = lastloop[4];
+            Action.saveData = true;
+            Action.startSpc = true;
+            Action.stopSpc = true;
             Action.copyArchive = true;
             Action.copyTemp = true;
             Action.displayPlot = true;
@@ -106,26 +106,27 @@ namespace TRS2
             int loop = 0;
             //bool status = false;
 
+            Display.Text("Measurement started");
             while (loop < Set.Loop[0].Num * Set.Loop[1].Num * Set.Loop[2].Num * Set.Loop[3].Num * Set.Loop[4].Num)
             //while (!P.Command.Abort && loop < Set.Loop[0].Num * Set.Loop[1].Num * Set.Loop[2].Num * Set.Loop[3].Num * Set.Loop[4].Num)
                 {
+                Display.Text("Loop " + loop + " started");
                 loopGet(loop);
                 decideAction();
                 //    if (P.Action.Oscill) Oscilloscope();
                 //    if (P.Action.moveStep) moveStep();
                 if (Action.startSpc) spc?.Start(Set.Spc.TimeMeas);
-                if (Action.copyArchive) data.CopyArchive(loop);
+                //spc?.Acquire();
+                //if (Action.copyArchive) data.CopyArchive(loop);
                 if (Action.copyTemp) data.CopyTemp();
                 if (Action.displayPlot) Display.LogPlot(data.Temp);
-
                 //    if (P.Action.saveData) saveData();
-
-                // MessageBox showing the current loop number and data.Temp[100] value
-
-                //MessageBox.Show("Running", "TRS2", MessageBoxButton.OK, MessageBoxImage.Information);
-                if (Action.stopSpc) spc.Stop();
+                if (Action.stopSpc) spc?.Stop();
                 loop++;
             }
+
+            spc?.Close();
+            Display.Text("Measurement finished");
 
             //// Close file if needed
             //// stop all thread before closing Data

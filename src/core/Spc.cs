@@ -51,13 +51,13 @@ namespace TRS2
             CloseDev();
         }
 
-        private void Acquire()
+        public void Acquire()
         {
             while (running)
             {
                 // One device acquisition.
                 // For TestSpc this can be empty; for MultiHarp it can start a single shot.
-                StartDev();
+                //StartDev();
                 WaitDev();
 
                 if (!running)

@@ -73,17 +73,3 @@ namespace TRS2
         }
     }
 }
-
-
-                //            for (int ib = 0; ib < numBins; ib++)
-                //                area += dataD[ib];
-                //            for (int ib = 0; ib < numBins; ib++) {
-                //                const double timeA = (P.Contest.Function == CONTEST_OSC ? P.Spc.TimeO : P.Spc.TimeM);
-                //                double value = (TEST_AREA * timeA / area * dataD[ib]);
-                //                value *= (1 - TEST_NOISE + (2.0 * TEST_NOISE * rand()) / RAND_MAX);
-                //                Buffer[static_cast<std::size_t>(ib + id * numBins)] = static_cast<uint32>(value);
-                //            }
-
-
-                // ... (rest of method)
-

@@ -1,4 +1,5 @@
 ﻿using ScottPlot.Plottables;
+using System;
 using System.Windows.Controls;
 
 namespace TRS2
@@ -15,6 +16,7 @@ namespace TRS2
             InitializeComponent();
             Display.InitRequested += InitDisplay;
             Display.Updated += UpdatePlot;
+            Display.TextRequested += AddText;
         }
 
         private void InitDisplay()
@@ -94,6 +96,18 @@ namespace TRS2
             }
 
             PlotView.Refresh();
+        }
+
+        private void AddText(string text)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => AddText(text));
+                return;
+            }
+
+            DisplayText.AppendText(text + Environment.NewLine);
+            DisplayText.ScrollToEnd();
         }
     }
 }
