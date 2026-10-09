@@ -25,6 +25,7 @@ namespace TRS2
         public void Start(double seconds)
         {
             SetTimeDev(seconds);
+            StartDev();
 
             running = true;
             acquisition = new Thread(Acquire)

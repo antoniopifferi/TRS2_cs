@@ -36,8 +36,8 @@ namespace TRS2
             }
             Action.Oscill = false;
             Action.saveData = true;
-            Action.startSpc = true;
-            Action.stopSpc = true;
+            Action.startSpc = firstloop[0]&&firstloop[1]&&firstloop[2]&&firstloop[3]&&firstloop[4];
+            Action.stopSpc = lastloop[0]&&lastloop[1]&&lastloop[2]&&lastloop[3]&&lastloop[4];
             Action.copyArchive = true;
             Action.copyTemp = true;
             Action.displayPlot = true;

@@ -30,7 +30,8 @@ namespace TRS2
         }
         protected override void WaitDev()
         {
-            // Wait logic for the test SPC device
+            // wait for _seconds seconds
+            System.Threading.Thread.Sleep((int)(_seconds * 1000 / 1000));
         }
         protected override void GetDev()
         {
@@ -41,9 +42,6 @@ namespace TRS2
             double[] dataD = new double[numBins];
 
             bool isOsc = true;
-
-            // wait for _seconds seconds
-            System.Threading.Thread.Sleep((int)(_seconds * 1000));
 
             for (int id = 0; id < numDet; ++id)
             {
