@@ -8,6 +8,7 @@
 - Declare all classes nested in Set.cs as partial for future extensions while keeping definitions compact and readable.
 - Keep code very short and simple; make members public and avoid extra access-modifier or abstraction complexity when implementing features.
 - Strictly separate instrument/domain classes (e.g., Display, future Step) from WPF GUI classes (e.g., DisplayPage); instrument classes must not reference WPF or ScottPlot UI controls.
+- For configuration selectors backed by numeric indices, use zero-based integer properties with UI labels translated to one-based names; this also applies to Set.Step.Loop.
 
 ## GUI Control Requirements
 - Create a reusable table-like group control for the GUI with the following specifications:

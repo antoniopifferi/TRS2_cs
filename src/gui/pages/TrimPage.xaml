@@ -1,0 +1,173 @@
+<Page x:Class="TRS2.TrimPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:local="clr-namespace:TRS2"
+      mc:Ignorable="d"
+      Title="TrimPage">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Auto"
+                  CanContentScroll="False">
+        <GroupBox Header="Trim" Margin="4">
+            <DataGrid ItemsSource="{x:Static local:Set.Trims}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="All"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      MinWidth="1500">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Trim" Binding="{Binding Number}" IsReadOnly="True" Width="55" />
+
+                    <DataGridTemplateColumn Header="Step" Width="90">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Step, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag">
+                                    <ComboBoxItem Content="NONE" Tag="-1" />
+                                    <ComboBoxItem Content="STEP1" Tag="0" />
+                                    <ComboBoxItem Content="STEP2" Tag="1" />
+                                    <ComboBoxItem Content="STEP3" Tag="2" />
+                                    <ComboBoxItem Content="STEP4" Tag="3" />
+                                    <ComboBoxItem Content="STEP5" Tag="4" />
+                                    <ComboBoxItem Content="STEP6" Tag="5" />
+                                    <ComboBoxItem Content="STEP7" Tag="6" />
+                                    <ComboBoxItem Content="STEP8" Tag="7" />
+                                    <ComboBoxItem Content="STEP9" Tag="8" />
+                                    <ComboBoxItem Content="STEP10" Tag="9" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Loop" Width="85">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Loop, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag">
+                                    <ComboBoxItem Content="NONE" Tag="-1" />
+                                    <ComboBoxItem Content="LOOP1" Tag="0" />
+                                    <ComboBoxItem Content="LOOP2" Tag="1" />
+                                    <ComboBoxItem Content="LOOP3" Tag="2" />
+                                    <ComboBoxItem Content="LOOP4" Tag="3" />
+                                    <ComboBoxItem Content="LOOP5" Tag="4" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Type" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="CONT" />
+                                    <ComboBoxItem Content="LIGHT" />
+                                    <ComboBoxItem Content="EXACT" />
+                                    <ComboBoxItem Content="ONLY_FIRST" />
+                                    <ComboBoxItem Content="ONLY_SECOND" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Wait" Width="75">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Wait, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="SPC" />
+                                    <ComboBoxItem Content="TIME" />
+                                    <ComboBoxItem Content="POS" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Target" Width="100">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Target, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="AREA" />
+                                    <ComboBoxItem Content="STDEV" />
+                                    <ComboBoxItem Content="WIDTH" />
+                                    <ComboBoxItem Content="AREAWID" />
+                                    <ComboBoxItem Content="MAX_BO" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="Low (cps)" Binding="{Binding LowCps, UpdateSourceTrigger=PropertyChanged}" Width="85" />
+                    <DataGridTextColumn Header="Goal (cps)" Binding="{Binding GoalCps, UpdateSourceTrigger=PropertyChanged}" Width="90" />
+                    <DataGridTextColumn Header="High (cps)" Binding="{Binding HighCps, UpdateSourceTrigger=PropertyChanged}" Width="90" />
+
+                    <DataGridTemplateColumn Header="Sign" Width="85">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Sign, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="HIGHER" />
+                                    <ComboBoxItem Content="LOWER" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Region" Width="90">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Roi, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag">
+                                    <ComboBoxItem Content="ROI_01" Tag="0" />
+                                    <ComboBoxItem Content="ROI_02" Tag="1" />
+                                    <ComboBoxItem Content="ROI_03" Tag="2" />
+                                    <ComboBoxItem Content="ROI_04" Tag="3" />
+                                    <ComboBoxItem Content="ROI_05" Tag="4" />
+                                    <ComboBoxItem Content="ROI_06" Tag="5" />
+                                    <ComboBoxItem Content="ROI_07" Tag="6" />
+                                    <ComboBoxItem Content="ROI_08" Tag="7" />
+                                    <ComboBoxItem Content="ROI_09" Tag="8" />
+                                    <ComboBoxItem Content="ROI_10" Tag="9" />
+                                    <ComboBoxItem Content="ROI_32" Tag="31" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="Fraction" Binding="{Binding Fraction, UpdateSourceTrigger=PropertyChanged}" Width="80" />
+                    <DataGridTextColumn Header="Time" Binding="{Binding Time, UpdateSourceTrigger=PropertyChanged}" Width="75" />
+                    <DataGridTextColumn Header="Delta" Binding="{Binding Delta, UpdateSourceTrigger=PropertyChanged}" Width="75" />
+                    <DataGridTextColumn Header="Num" Binding="{Binding Num, UpdateSourceTrigger=PropertyChanged}" Width="65" />
+
+                    <DataGridTemplateColumn Header="Scan" Width="85">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Scan, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="RANGE" />
+                                    <ComboBoxItem Content="MIDDLE" />
+                                    <ComboBoxItem Content="UP" />
+                                    <ComboBoxItem Content="DOWN" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="onBreak" Width="85">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding OnBreak, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                                    <ComboBoxItem Content="BEFORE" />
+                                    <ComboBoxItem Content="AFTER" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridCheckBoxColumn Header="Display" Binding="{Binding Display, UpdateSourceTrigger=PropertyChanged}" Width="70" />
+                    <DataGridCheckBoxColumn Header="Status" Binding="{Binding Status, UpdateSourceTrigger=PropertyChanged}" Width="65" />
+                    <DataGridCheckBoxColumn Header="Prompt" Binding="{Binding Prompt, UpdateSourceTrigger=PropertyChanged}" Width="65" />
+                    <DataGridTextColumn Header="FileName" Binding="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" Width="110" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+    </ScrollViewer>
+</Page>

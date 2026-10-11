@@ -136,7 +136,6 @@ namespace TRS2
             //closeData();
 
             //GUI->displayPanel("Parm");
-
         }
     }
 }

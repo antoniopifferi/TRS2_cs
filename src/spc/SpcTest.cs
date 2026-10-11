@@ -31,7 +31,7 @@ namespace TRS2
         protected override void WaitDev()
         {
             // wait for _seconds seconds
-            System.Threading.Thread.Sleep((int)(_seconds * 1000 / 1000));
+            System.Threading.Thread.Sleep((int)(_seconds * 1000));
         }
         protected override void GetDev()
         {

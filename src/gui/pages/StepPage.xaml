@@ -8,32 +8,146 @@
       Title="StepPage">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto"
-                  HorizontalScrollBarVisibility="Auto">
+                  HorizontalScrollBarVisibility="Auto"
+                  CanContentScroll="False">
 
-        <WrapPanel Margin="4"
-                   Orientation="Horizontal"
-                   VerticalAlignment="Top">
+        <GroupBox Header="Stepper" Margin="4">
+            <DataGrid ItemsSource="{x:Static local:Set.Steps}"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="All"
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      MinWidth="1100">
 
-            <GroupBox Header="Group3"
-                      DataContext="{x:Static local:Set.Group3}">
-                <StackPanel>
-                    <local:ParmRow Header="String3"><TextBox Text="{Binding String3, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                </StackPanel>
-            </GroupBox>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Step"
+                                        Binding="{Binding Number}"
+                                        IsReadOnly="True"
+                                        Width="55" />
 
-            <!--
-                Future array example:
+                    <DataGridTemplateColumn Header="Type" Width="90">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedValuePath="Content">
+                                    <ComboBoxItem Content="NONE" />
+                                    <ComboBoxItem Content="MANNY" />
+                                    <ComboBoxItem Content="ARD_STE" />
+                                    <ComboBoxItem Content="ARD_FLO" />
+                                    <ComboBoxItem Content="MICRO2" />
+                                    <ComboBoxItem Content="NKT_LAM" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                <GroupBox Header="My array">
-                    <DataGrid ItemsSource="{x:Static local:Set.MyArray}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="A" Binding="{Binding A, UpdateSourceTrigger=PropertyChanged}" />
-                            <DataGridTextColumn Header="B" Binding="{Binding B, UpdateSourceTrigger=PropertyChanged}" />
-                        </DataGrid.Columns>
-                    </DataGrid>
-                </GroupBox>
-            -->
+                    <DataGridTextColumn Header="Com"
+                                        Binding="{Binding Com, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="65" />
 
-        </WrapPanel>
+                    <DataGridTextColumn Header="Axis"
+                                        Binding="{Binding Axis, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="90" />
+
+                    <DataGridTemplateColumn Header="Mode" Width="90">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Mode, UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedValuePath="Content">
+                                    <ComboBoxItem Content="SINGLE" />
+                                    <ComboBoxItem Content="MULTI" />
+                                    <ComboBoxItem Content="CONT" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Sign" Width="75">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Sign, UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedValuePath="Content">
+                                    <ComboBoxItem Content="POS" />
+                                    <ComboBoxItem Content="NEG" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Loop" Width="85">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Loop, UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedValuePath="Tag">
+                                    <ComboBoxItem Content="NONE" Tag="-1" />
+                                    <ComboBoxItem Content="LOOP1" Tag="0" />
+                                    <ComboBoxItem Content="LOOP2" Tag="1" />
+                                    <ComboBoxItem Content="LOOP3" Tag="2" />
+                                    <ComboBoxItem Content="LOOP4" Tag="3" />
+                                    <ComboBoxItem Content="LOOP5" Tag="4" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Hold" Width="75">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Hold, UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedValuePath="Content">
+                                    <ComboBoxItem Content="ON" />
+                                    <ComboBoxItem Content="MEAS" />
+                                    <ComboBoxItem Content="OFF" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Lcd" Width="75">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox SelectedValue="{Binding Lcd, UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedValuePath="Content">
+                                    <ComboBoxItem Content="OFF" />
+                                    <ComboBoxItem Content="ALL" />
+                                    <ComboBoxItem Content="END" />
+                                </ComboBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTextColumn Header="File name"
+                                        Binding="{Binding FileName, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="130" />
+                    <DataGridTextColumn Header="Min (hw)"
+                                        Binding="{Binding MinHw, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="100" />
+                    <DataGridTextColumn Header="Max (hw)"
+                                        Binding="{Binding MaxHw, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="100" />
+                    <DataGridTextColumn Header="Freq min"
+                                        Binding="{Binding FreqMin, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="80" />
+                    <DataGridTextColumn Header="Freq max"
+                                        Binding="{Binding FreqMax, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="80" />
+                    <DataGridTextColumn Header="Freq"
+                                        Binding="{Binding Freq, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="80" />
+                    <DataGridTextColumn Header="Freq delta"
+                                        Binding="{Binding FreqDelta, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="85" />
+                    <DataGridTextColumn Header="Factor"
+                                        Binding="{Binding Factor, UpdateSourceTrigger=PropertyChanged}"
+                                        Width="80" />
+                    <DataGridCheckBoxColumn Header="Sort"
+                                            Binding="{Binding Sort, UpdateSourceTrigger=PropertyChanged}"
+                                            Width="55" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
     </ScrollViewer>
 </Page>

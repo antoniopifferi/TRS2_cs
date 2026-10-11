@@ -8,6 +8,7 @@ namespace TRS2
     {
         public ParmPage ParmPage;
         public StepPage StepPage;
+        public TrimPage TrimPage;
         public DisplayPage DisplayPage;
 
         public MainWindow()
@@ -16,6 +17,7 @@ namespace TRS2
 
             ParmPage = new();
             StepPage = new();
+            TrimPage = new();
             DisplayPage = new();
 
             MainFrame.Navigate(ParmPage);
@@ -29,6 +31,11 @@ namespace TRS2
         private void OpenStepPage(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(StepPage);
+        }
+
+        private void OpenTrimPage(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(TrimPage);
         }
 
         private void OpenDisplayPage(object sender, RoutedEventArgs e)
