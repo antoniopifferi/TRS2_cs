@@ -17,6 +17,10 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
+            <MenuItem Header="File">
+                <MenuItem Header="SaveSet" Click="SaveSet" />
+                <MenuItem Header="LoadSet" Click="LoadSet" />
+            </MenuItem>
             <MenuItem Header="Window">
                 <MenuItem Header="Parm" Click="OpenParmPage" />
                 <MenuItem Header="Step" Click="OpenStepPage" />

@@ -1,0 +1,1 @@
+﻿global using static TRS2.Globals;

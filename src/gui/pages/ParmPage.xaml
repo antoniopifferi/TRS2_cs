@@ -16,7 +16,7 @@
 
 
             <GroupBox Header="Loop">
-                <DataGrid ItemsSource="{x:Static local:Set.Loop}">
+                <DataGrid ItemsSource="{Binding Loop}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Loop"       Binding="{Binding Number}"                                      IsReadOnly="True" Width="50" />
                         <DataGridTextColumn Header="Home"       Binding="{Binding Home, UpdateSourceTrigger=PropertyChanged}"                    />
@@ -34,7 +34,7 @@
 
 
             <GroupBox Header="Spc"
-                      DataContext="{x:Static local:Set.Spc}">
+                      DataContext="{Binding Spc}">
                 <StackPanel>
                     <local:ParmRow Header="Type"><ComboBox SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content"><ComboBoxItem Content="NONE" /><ComboBoxItem Content="TEST" /></ComboBox></local:ParmRow>
                     <local:ParmRow Header="Wait"><TextBox Text="{Binding Wait, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
@@ -49,7 +49,7 @@
 
 
             <GroupBox Header="Group1"
-                      DataContext="{x:Static local:Set.Group1}">
+                      DataContext="{Binding Group1}">
                 <StackPanel>
                     <local:ParmRow Header="Int1"><TextBox Text="{Binding Int1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
                     <local:ParmRow Header="Double1"><TextBox Text="{Binding Double1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>

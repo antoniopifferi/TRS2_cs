@@ -2,15 +2,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace TRS2
 {
-    public static partial class Set
+    public partial class SetData
     {
         // members of Set
-        public static Group1Data Group1 { get; } = new();
-        public static Group3Data Group3 { get; } = new();
-        public static SpcData Spc { get; } = new();
-        public static LoopData[] Loop { get; } = CreateArray(Konst.MAX_LOOP, i => new LoopData(i + 1));
-        public static Step[] Steps { get; } = CreateArray(Konst.MAX_STEP, i => new Step(i + 1));
-        public static Trim[] Trims { get; } = CreateArray(Konst.MAX_TRIM, i => new Trim(i + 1));
+        public Group1Data Group1 { get; set; } = new();
+        public Group3Data Group3 { get; set; } = new();
+        public SpcData Spc { get; set; } = new();
+        public LoopData[] Loop { get; set; } = CreateArray(Konst.MAX_LOOP, i => new LoopData(i + 1));
+        public Step[] Steps { get; set; } = CreateArray(Konst.MAX_STEP, i => new Step(i + 1));
+        public Trim[] Trims { get; set; } = CreateArray(Konst.MAX_TRIM, i => new Trim(i + 1));
 
         // definitions of classes used in Set
 

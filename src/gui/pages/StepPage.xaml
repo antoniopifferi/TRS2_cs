@@ -12,7 +12,7 @@
                   CanContentScroll="False">
 
         <GroupBox Header="Stepper" Margin="4">
-            <DataGrid ItemsSource="{x:Static local:Set.Steps}"
+            <DataGrid ItemsSource="{Binding Steps}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"

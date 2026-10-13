@@ -11,7 +11,7 @@
                   HorizontalScrollBarVisibility="Auto"
                   CanContentScroll="False">
         <GroupBox Header="Trim" Margin="4">
-            <DataGrid ItemsSource="{x:Static local:Set.Trims}"
+            <DataGrid ItemsSource="{Binding Trims}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"

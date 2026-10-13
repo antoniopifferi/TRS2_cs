@@ -13,5 +13,6 @@ namespace TRS2
         public const double TEST_AREA = 1000000;
         public const double TEST_NOISE = 0.1;
         public const int RAND_MAX = 32767;
+        public const string FILE_SET = "TRS2.json";
     }
 }
