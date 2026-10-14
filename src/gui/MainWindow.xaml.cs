@@ -2,6 +2,7 @@ using System.Windows;
 using System.Threading.Tasks;
 using System.Text.Json;
 using System.IO;
+using Microsoft.Win32;
 
 
 namespace TRS2
@@ -21,6 +22,7 @@ namespace TRS2
             StepPage = new();
             TrimPage = new();
             DisplayPage = new();
+            LoadSetFile(Konst.FILE_SET);
 
             // IMPORTANT: Connect pages to the global Set object
             ParmPage.DataContext = Set;
@@ -28,6 +30,12 @@ namespace TRS2
             TrimPage.DataContext = Set;
 
             MainFrame.Navigate(ParmPage);
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            SaveSetFile(Konst.FILE_SET);
+            base.OnClosing(e);
         }
 
         private void OpenParmPage(object sender, RoutedEventArgs e)
@@ -52,13 +60,36 @@ namespace TRS2
 
         private void SaveSet(object sender, RoutedEventArgs e)
         {
-            File.WriteAllText(Konst.FILE_SET,JsonSerializer.Serialize(Set,new JsonSerializerOptions { WriteIndented = true }));
+            SaveFileDialog Dialog = new() { Filter = "JSON files (*.json)|*.json", DefaultExt = ".json", AddExtension = true };
+            if (Dialog.ShowDialog() != true)
+            {
+                MessageBox.Show("No File Selected");
+                return;
+            }
+
+            SaveSetFile(Dialog.FileName);
+        }
+
+        private void SaveSetFile(string FileName)
+        {
+            File.WriteAllText(FileName, JsonSerializer.Serialize(Set, new JsonSerializerOptions { WriteIndented = true }));
         }
 
         private void LoadSet(object sender, RoutedEventArgs e)
         {
-            Set = JsonSerializer.Deserialize<SetData>(File.ReadAllText(Konst.FILE_SET)) ?? throw new InvalidDataException("Invalid settings file.");
+            OpenFileDialog Dialog = new() { Filter = "JSON files (*.json)|*.json" };
+            if (Dialog.ShowDialog() != true || !File.Exists(Dialog.FileName))
+            {
+                MessageBox.Show("No File Selected");
+                return;
+            }
 
+            LoadSetFile(Dialog.FileName);
+        }
+
+        private void LoadSetFile(string FileName)
+        {
+            Set = JsonSerializer.Deserialize<SetData>(File.ReadAllText(FileName)) ?? throw new InvalidDataException("Invalid settings file.");
             ParmPage.DataContext = Set;
             StepPage.DataContext = Set;
             TrimPage.DataContext = Set;
