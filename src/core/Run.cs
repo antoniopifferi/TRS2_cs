@@ -19,7 +19,7 @@ namespace TRS2
             public static bool copyArchive;
             public static bool copyTemp;
             public static bool displayPlot;
-            public static bool saveData;
+            public static bool Save;
         }
 
         private static void decideAction()
@@ -35,7 +35,7 @@ namespace TRS2
                 if (iL == 0) newloop[iL] = false; else newloop[iL] = firstloop[iL - 1];
             }
             Action.Oscill = false;
-            Action.saveData = true;
+            Action.Save = Set.File.Save;
             Action.startSpc = firstloop[0]&&firstloop[1]&&firstloop[2]&&firstloop[3]&&firstloop[4];
             Action.stopSpc = lastloop[0]&&lastloop[1]&&lastloop[2]&&lastloop[3]&&lastloop[4];
             Action.copyArchive = true;
@@ -96,6 +96,7 @@ namespace TRS2
 
 
             Display.Init();
+            Store.Init();
 
             //initSteps();
             //initSpc();
@@ -120,12 +121,13 @@ namespace TRS2
                 //if (Action.copyArchive) data.CopyArchive(loop);
                 if (Action.copyTemp) data.CopyTemp();
                 if (Action.displayPlot) Display.LogPlot(data.Temp);
-                //    if (P.Action.saveData) saveData();
+                if (Action.Save) Store.Save();
                 if (Action.stopSpc) spc?.Stop();
                 loop++;
             }
 
             spc?.Close();
+            Store.Close();
             Display.Text("Measurement finished");
 
             //// Close file if needed

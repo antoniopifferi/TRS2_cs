@@ -7,8 +7,11 @@
 - Prefer compact, readable class definitions with minimal spacing.
 - Declare all classes nested in Set.cs as partial for future extensions while keeping definitions compact and readable.
 - Keep code very short and simple; make members public and avoid extra access-modifier or abstraction complexity when implementing features.
+- Keep new code short and simple; avoid private members and unnecessary getters/setters unless strictly needed.
 - Strictly separate instrument/domain classes (e.g., Display, future Step) from WPF GUI classes (e.g., DisplayPage); instrument classes must not reference WPF or ScottPlot UI controls.
 - For configuration selectors backed by numeric indices, use zero-based integer properties with UI labels translated to one-based names; this also applies to Set.Step.Loop.
+- Keep code short and simple, following the existing project style with minimal spacing and abstraction.
+- Prefer shorter, simpler code and minimal ceremony when implementing features.
 
 ## GUI Control Requirements
 - Create a reusable table-like group control for the GUI with the following specifications:

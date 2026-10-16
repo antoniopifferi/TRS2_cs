@@ -89,6 +89,7 @@ namespace TRS2
 
         private void LoadSetFile(string FileName)
         {
+            if (!File.Exists(FileName)) return;
             Set = JsonSerializer.Deserialize<SetData>(File.ReadAllText(FileName)) ?? throw new InvalidDataException("Invalid settings file.");
             ParmPage.DataContext = Set;
             StepPage.DataContext = Set;

@@ -8,6 +8,7 @@ namespace TRS2
         public Group1Data Group1 { get; set; } = new();
         public Group3Data Group3 { get; set; } = new();
         public SpcData Spc { get; set; } = new();
+        public Store File { get; set; } = new();
         public LoopData[] Loop { get; set; } = CreateArray(Konst.MAX_LOOP, i => new LoopData(i + 1));
         public Step[] Steps { get; set; } = CreateArray(Konst.MAX_STEP, i => new Step(i + 1));
         public Trim[] Trims { get; set; } = CreateArray(Konst.MAX_TRIM, i => new Trim(i + 1));
@@ -36,6 +37,16 @@ namespace TRS2
             public double BinWidth { get; set; } = 1.0;
             public int NumDet { get; set; } = 1;
             public int NumBoard { get; set; } = 1;
+        }
+
+        public partial class Store
+        {
+            public string Fdir { get; set; } = @"C:\Temp";
+            public string Fext { get; set; } = "DAT";
+            public string Prefix { get; set; } = "AAAAm";
+            public int Tag { get; set; } = 0;
+            public string Type { get; set; } = "BINARY";
+            public bool Save { get; set; } = true;
         }
 
         public partial class LoopData : ObservableObject

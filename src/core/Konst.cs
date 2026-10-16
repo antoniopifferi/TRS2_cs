@@ -14,5 +14,10 @@ namespace TRS2
         public const double TEST_NOISE = 0.1;
         public const int RAND_MAX = 32767;
         public const string FILE_SET = "TRS2.json";
+        public const int HEAD_LEN = 256;
+        public const int HEAD_VER_SUB_UNO = 1;
+        public const int HEAD_VER_DUE = 2;
+        public const int HEAD_VER_GEN = 0;
+        public const int HEAD_IS_SUB = 0;
     }
 }

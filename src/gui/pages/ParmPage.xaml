@@ -33,6 +33,19 @@
             </GroupBox>
 
 
+            <GroupBox Header="File"
+                      DataContext="{Binding File}">
+                <StackPanel>
+                    <local:ParmRow Header="Fdir"><TextBox Text="{Binding Fdir, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="Fext"><TextBox Text="{Binding Fext, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="Prefix"><TextBox Text="{Binding Prefix, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="Tag"><TextBox Text="{Binding Tag, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                    <local:ParmRow Header="Type"><ComboBox SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content"><ComboBoxItem Content="BINARY" /><ComboBoxItem Content="ASCII" /></ComboBox></local:ParmRow>
+                    <local:ParmRow Header="Save"><CheckBox IsChecked="{Binding Save, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                </StackPanel>
+            </GroupBox>
+
+
             <GroupBox Header="Spc"
                       DataContext="{Binding Spc}">
                 <StackPanel>
