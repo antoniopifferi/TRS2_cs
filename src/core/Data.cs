@@ -2,13 +2,15 @@
 using System.Threading;
 using TypeData = System.UInt32; // 4 bytes
 
-
 namespace TRS2
 {
     public sealed class Data
     {
         private readonly TypeData[] ringData;
-        private readonly TypeData[] archiveData;
+
+        // Complete contiguous storage for all archive slices.
+        public readonly TypeData[] Archive;
+
         public readonly TypeData[] Temp;
 
         public int NumElem { get; }
@@ -25,16 +27,17 @@ namespace TRS2
             NumSlice = numSlice;
             NumAcq = numAcq;
 
-            ringData = new uint[numAcq * numElem];
-            archiveData = new uint[numSlice * numElem];
-            Temp = new uint[numElem];
+            ringData = new TypeData[numAcq * numElem];
+            Archive = new TypeData[numSlice * numElem];
+            Temp = new TypeData[numElem];
         }
 
         public Span<TypeData> Ring(int slot) =>
             ringData.AsSpan(slot * NumElem, NumElem);
 
-        public Span<TypeData> Archive(int slice) =>
-            archiveData.AsSpan(slice * NumElem, NumElem);
+        // One slice within the contiguous archive.
+        public Span<TypeData> Slice(int slice) =>
+            Archive.AsSpan(slice * NumElem, NumElem);
 
         public void CopyArchive(int slice)
         {
@@ -43,7 +46,7 @@ namespace TRS2
             while (n >= Volatile.Read(ref Produced))
                 Thread.Yield();
 
-            Ring((int)(n % NumAcq)).CopyTo(Archive(slice));
+            Ring((int)(n % NumAcq)).CopyTo(Slice(slice));
 
             Volatile.Write(ref Consumed, n + 1);
         }
@@ -56,8 +59,6 @@ namespace TRS2
                 Thread.Yield();
 
             Ring((int)(n % NumAcq)).CopyTo(Temp);
-
-            Volatile.Write(ref Consumed, n + 1);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace TRS2
         public Group1Data Group1 { get; set; } = new();
         public Group3Data Group3 { get; set; } = new();
         public SpcData Spc { get; set; } = new();
-        public Store File { get; set; } = new();
+        public StoreData Store { get; set; } = new();
         public LoopData[] Loop { get; set; } = CreateArray(Konst.MAX_LOOP, i => new LoopData(i + 1));
         public Step[] Steps { get; set; } = CreateArray(Konst.MAX_STEP, i => new Step(i + 1));
         public Trim[] Trims { get; set; } = CreateArray(Konst.MAX_TRIM, i => new Trim(i + 1));
@@ -39,7 +39,7 @@ namespace TRS2
             public int NumBoard { get; set; } = 1;
         }
 
-        public partial class Store
+        public partial class StoreData
         {
             public string Fdir { get; set; } = @"C:\Temp";
             public string Fext { get; set; } = "DAT";

@@ -33,8 +33,8 @@
             </GroupBox>
 
 
-            <GroupBox Header="File"
-                      DataContext="{Binding File}">
+            <GroupBox Header="Store"
+                      DataContext="{Binding Store}">
                 <StackPanel>
                     <local:ParmRow Header="Fdir"><TextBox Text="{Binding Fdir, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
                     <local:ParmRow Header="Fext"><TextBox Text="{Binding Fext, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>

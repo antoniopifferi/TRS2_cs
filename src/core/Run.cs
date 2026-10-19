@@ -35,7 +35,7 @@ namespace TRS2
                 if (iL == 0) newloop[iL] = false; else newloop[iL] = firstloop[iL - 1];
             }
             Action.Oscill = false;
-            Action.Save = Set.File.Save;
+            Action.Save = Set.Store.Save;
             Action.startSpc = firstloop[0]&&firstloop[1]&&firstloop[2]&&firstloop[3]&&firstloop[4];
             Action.stopSpc = lastloop[0]&&lastloop[1]&&lastloop[2]&&lastloop[3]&&lastloop[4];
             Action.copyArchive = true;
@@ -84,7 +84,8 @@ namespace TRS2
             // initData();
             int numElem = Set.Spc.NumBoard * Set.Spc.NumDet * Set.Spc.NumBins;
             int NumAcq = 512;
-            data = new Data(numElem,Set.Loop[4].Num,NumAcq);
+            int numslice = 1;
+            data = new Data(numElem,numslice,NumAcq);
 
             // initSpc();
             spc = Set.Spc.Type switch
@@ -118,7 +119,7 @@ namespace TRS2
                 //    if (P.Action.moveStep) moveStep();
                 if (Action.startSpc) spc?.Start(Set.Spc.TimeMeas);
                 //spc?.Acquire();
-                //if (Action.copyArchive) data.CopyArchive(loop);
+                if (Action.copyArchive) data.CopyArchive(0);
                 if (Action.copyTemp) data.CopyTemp();
                 if (Action.displayPlot) Display.LogPlot(data.Temp);
                 if (Action.Save) Store.Save();

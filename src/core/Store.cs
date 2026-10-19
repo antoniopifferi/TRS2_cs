@@ -1,6 +1,7 @@
 using Microsoft.VisualBasic;
 using System.IO;
 using System.Windows;
+using System.Runtime.InteropServices;
 
 namespace TRS2
 {
@@ -12,8 +13,8 @@ namespace TRS2
 
         public static void Init()
         {
-            var file = Set.File;
-            datafilepath = Path.Combine(file.Fdir,$"{file.Prefix}{file.Tag:D4}.{file.Fext.TrimStart('.')}");
+            var store = Set.Store;
+            datafilepath = Path.Combine(store.Fdir,$"{store.Prefix}{store.Tag:D4}.{store.Fext.TrimStart('.')}");
 
             try
             {
@@ -23,9 +24,9 @@ namespace TRS2
                     if (answer == MessageBoxResult.Cancel) return;
                     if (answer == MessageBoxResult.No)
                     {
-                        var name = Interaction.InputBox("Enter the new filename without directory or extension:","TRS2",file.Prefix);
+                        var name = Interaction.InputBox("Enter the new filename without directory or extension:","TRS2", $"{store.Prefix}{store.Tag:D4}");
                         if (string.IsNullOrWhiteSpace(name) || name != Path.GetFileName(name) || Path.HasExtension(name)) return;
-                        datafilepath = Path.Combine(file.Fdir,$"{name}.{file.Fext.TrimStart('.')}");
+                        datafilepath = Path.Combine(store.Fdir,$"{name}.{store.Fext.TrimStart('.')}");
                     }
                 }
 
@@ -37,9 +38,18 @@ namespace TRS2
             {
                 MessageBox.Show($"Error in File = {datafilepath}","TRS2",MessageBoxButton.OK,MessageBoxImage.Error);
             }
+            Display.Text("Initialised File: " + datafilepath);
         }
 
-        public static void Save() { }
+        public static void Save()
+        {
+            var data = Run.data;
+            var file = datafileobj;
+
+            if (data is null || file is null) return;
+
+            file.Write(MemoryMarshal.AsBytes(data.Archive.AsSpan()));
+        }
 
         public static void Close()
         {
