@@ -13,23 +13,29 @@ namespace TRS2
 
         public readonly TypeData[] Temp;
 
-        public int NumElem { get; }
-        public int NumSlice { get; }
-        public int NumAcq { get; }
+
+        public readonly int NumBins; // number of bins for a single detector/histogram
+        public readonly int NumPages; // number of detectors/histograms per acquisition
+        public readonly int NumElem; // total number of bins for a single acquisition
+        public readonly int NumAcq;   // number of acquisitions in the ring buffer
+        public readonly int NumSlices;   // number of slices in the archive
+
 
         // Written only by producer / consumer respectively.
         public long Produced;
         public long Consumed;
 
-        public Data(int numElem, int numSlice, int numAcq)
+        public Data()
         {
-            NumElem = numElem;
-            NumSlice = numSlice;
-            NumAcq = numAcq;
+            NumBins = Set.Spc.NumBins;
+            NumPages = Set.Spc.NumDet * Set.Spc.NumBoard;
+            NumElem = NumBins * NumPages;
+            NumAcq = Konst.MAX_ACQ;
+            NumSlices = 1;
 
-            ringData = new TypeData[numAcq * numElem];
-            Archive = new TypeData[numSlice * numElem];
-            Temp = new TypeData[numElem];
+            ringData = new TypeData[NumAcq * NumElem];
+            Archive = new TypeData[NumSlices * NumElem];
+            Temp = new TypeData[NumElem];
         }
 
         public Span<TypeData> Ring(int slot) =>

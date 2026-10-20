@@ -81,13 +81,8 @@ namespace TRS2
             //GUI->readAll();
             //GUI->displayPanel("Output");
 
-            // initData();
-            int numElem = Set.Spc.NumBoard * Set.Spc.NumDet * Set.Spc.NumBins;
-            int NumAcq = 512;
-            int numslice = 1;
-            data = new Data(numElem,numslice,NumAcq);
+            data = new Data();
 
-            // initSpc();
             spc = Set.Spc.Type switch
             {
                 "TEST" => new SpcTest(),

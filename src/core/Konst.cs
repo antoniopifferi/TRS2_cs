@@ -19,5 +19,6 @@ namespace TRS2
         public const int HEAD_VER_DUE = 2;
         public const int HEAD_VER_GEN = 0;
         public const int HEAD_IS_SUB = 0;
+        public const int MAX_ACQ = 512; // max number of slots for acq (full slice) in ring array
     }
 }
