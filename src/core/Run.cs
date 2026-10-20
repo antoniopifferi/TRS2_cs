@@ -39,7 +39,7 @@ namespace TRS2
             Action.startSpc = firstloop[0]&&firstloop[1]&&firstloop[2]&&firstloop[3]&&firstloop[4];
             Action.stopSpc = lastloop[0]&&lastloop[1]&&lastloop[2]&&lastloop[3]&&lastloop[4];
             Action.copyArchive = true;
-            Action.copyTemp = true;
+            //Action.copyTemp = true;
             Action.displayPlot = true;
         }
 
@@ -62,24 +62,19 @@ namespace TRS2
 
         public static void Oscill()
         {
-            //MessageBox.Show("Running", "TRS2", MessageBoxButton.OK, MessageBoxImage.Information);
+            Display.Text("Oscilloscope, press CONTINUE to go on");
+            spc?.Start(Set.Spc.TimeOscill);
+            while (!Set.Display.Continue)
+            {
+                data.CopyTemp();
+                Display.LogPlot(data.Temp);
+            }
+            spc?.Stop();
+            Set.Display.Continue = false;
         }
 
         public static void Measure()
         {
-
-            // GUI
-            //P.Num.Board = 1;
-            //P.Num.Det = 1;
-            //P.Frame.Num = 1;
-            //P.Contest.Function = CONTEST_OSC;
-            //P.Action.Oscill = false;
-            //P.Command.Abort = false;
-            //P.Meas.Plot = 1;
-            //P.Meas.Save = P.Loop[4].Num;
-
-            //GUI->readAll();
-            //GUI->displayPanel("Output");
 
             data = new Data();
 
@@ -98,7 +93,7 @@ namespace TRS2
             //initSpc();
             //InitDataFile();
 
-            //Oscilloscope();
+            Oscill();
 
             int loop = 0;
             //bool status = false;
@@ -110,13 +105,11 @@ namespace TRS2
                 Display.Text("Loop " + loop + " started");
                 loopGet(loop);
                 decideAction();
-                //    if (P.Action.Oscill) Oscilloscope();
+                if (Action.Oscill) Oscill();
                 //    if (P.Action.moveStep) moveStep();
                 if (Action.startSpc) spc?.Start(Set.Spc.TimeMeas);
-                //spc?.Acquire();
                 if (Action.copyArchive) data.CopyArchive(0);
-                if (Action.copyTemp) data.CopyTemp();
-                if (Action.displayPlot) Display.LogPlot(data.Temp);
+                if (Action.displayPlot) Display.LogPlot(data.Slice(0).ToArray());
                 if (Action.Save) Store.Save();
                 if (Action.stopSpc) spc?.Stop();
                 loop++;

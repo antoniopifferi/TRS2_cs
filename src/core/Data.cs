@@ -48,23 +48,20 @@ namespace TRS2
         public void CopyArchive(int slice)
         {
             long n = Volatile.Read(ref Consumed);
-
             while (n >= Volatile.Read(ref Produced))
                 Thread.Yield();
-
             Ring((int)(n % NumAcq)).CopyTo(Slice(slice));
-
             Volatile.Write(ref Consumed, n + 1);
         }
 
         public void CopyTemp()
         {
             long n = Volatile.Read(ref Consumed);
-
             while (n >= Volatile.Read(ref Produced))
                 Thread.Yield();
-
             Ring((int)(n % NumAcq)).CopyTo(Temp);
+            Volatile.Write(ref Consumed, n + 1);
+
         }
     }
 }

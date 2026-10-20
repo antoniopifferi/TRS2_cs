@@ -28,6 +28,11 @@
                VerticalScrollBarVisibility="Auto"
                HorizontalScrollBarVisibility="Disabled" />
 
+            <Button Content="CONTINUE"
+                    Width="120"
+                    Margin="4"
+                    Click="Continue" />
+
         </StackPanel>
     </ScrollViewer>
 </Page>

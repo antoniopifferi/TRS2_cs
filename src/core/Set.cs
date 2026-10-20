@@ -9,6 +9,7 @@ namespace TRS2
         public Group3Data Group3 { get; set; } = new();
         public SpcData Spc { get; set; } = new();
         public StoreData Store { get; set; } = new();
+        public DisplayData Display { get; set; } = new();
         public LoopData[] Loop { get; set; } = CreateArray(Konst.MAX_LOOP, i => new LoopData(i + 1));
         public Step[] Steps { get; set; } = CreateArray(Konst.MAX_STEP, i => new Step(i + 1));
         public Trim[] Trims { get; set; } = CreateArray(Konst.MAX_TRIM, i => new Trim(i + 1));
@@ -47,6 +48,11 @@ namespace TRS2
             public int Tag { get; set; } = 0;
             public string Type { get; set; } = "BINARY";
             public bool Save { get; set; } = true;
+        }
+
+        public partial class DisplayData
+        {
+            public bool Continue { get; set; }
         }
 
         public partial class LoopData : ObservableObject

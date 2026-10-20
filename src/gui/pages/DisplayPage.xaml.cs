@@ -109,5 +109,10 @@ namespace TRS2
             DisplayText.AppendText(text + Environment.NewLine);
             DisplayText.ScrollToEnd();
         }
+
+        private void Continue(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Set.Display.Continue = true;
+        }
     }
 }

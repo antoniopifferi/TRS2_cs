@@ -69,8 +69,7 @@ namespace TRS2
                 long n = Volatile.Read(ref data.Produced);
 
                 // Ring full: wait until the consumer frees one slot.
-                while (running &&
-                       n - Volatile.Read(ref data.Consumed) >= data.NumAcq)
+                while (running && n - Volatile.Read(ref data.Consumed) >= data.NumAcq)
                 {
                     Thread.Yield();
                 }
