@@ -8,6 +8,7 @@ namespace TRS2
     {
         private readonly Data data=Run.data;
 
+        public bool isTrash = false;
         private Thread? acquisition;
         private volatile bool running;
         protected TypeData[] Buffer = [];
@@ -32,6 +33,12 @@ namespace TRS2
             {
                 IsBackground = true
             };
+
+            if (isTrash)
+            {
+                Volatile.Write(ref data.Consumed, Volatile.Read(ref data.Produced));
+            }
+
             acquisition.Start();
         }
 

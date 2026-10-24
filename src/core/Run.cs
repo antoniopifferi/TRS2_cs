@@ -73,6 +73,7 @@ namespace TRS2
 
             spc?.Stop();
             Set.Display.Continue = false;
+            spc?.isTrash = true;
         }
 
         public static void Measure()
