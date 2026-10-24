@@ -64,11 +64,13 @@ namespace TRS2
         {
             Display.Text("Oscilloscope, press CONTINUE to go on");
             spc?.Start(Set.Spc.TimeOscill);
+
             while (!Set.Display.Continue)
             {
                 data.CopyTemp();
-                Display.LogPlot(data.Temp);
+                Display.LogPlot();
             }
+
             spc?.Stop();
             Set.Display.Continue = false;
         }
@@ -99,19 +101,26 @@ namespace TRS2
             //bool status = false;
 
             Display.Text("Measurement started");
-            while (loop < Set.Loop[0].Num * Set.Loop[1].Num * Set.Loop[2].Num * Set.Loop[3].Num * Set.Loop[4].Num)
-            //while (!P.Command.Abort && loop < Set.Loop[0].Num * Set.Loop[1].Num * Set.Loop[2].Num * Set.Loop[3].Num * Set.Loop[4].Num)
+            while (loop < Set.Loop[0].Num * Set.Loop[1].Num *
+                    Set.Loop[2].Num * Set.Loop[3].Num *
+                    Set.Loop[4].Num)
                 {
                 Display.Text("Loop " + loop + " started");
                 loopGet(loop);
                 decideAction();
+
                 if (Action.Oscill) Oscill();
-                //    if (P.Action.moveStep) moveStep();
                 if (Action.startSpc) spc?.Start(Set.Spc.TimeMeas);
                 if (Action.copyArchive) data.CopyArchive(0);
-                if (Action.displayPlot) Display.LogPlot(data.Slice(0).ToArray());
+                if (Action.displayPlot) Display.LogPlot();
+
+                // Future:
+                // Analysis.Process(data.Slice);
+                // Feedback.Process(data.Slice);
+
                 if (Action.Save) Store.Save();
                 if (Action.stopSpc) spc?.Stop();
+
                 loop++;
             }
 

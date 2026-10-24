@@ -73,7 +73,7 @@ namespace TRS2
             PlotView.Refresh();
         }
 
-        private void UpdatePlot(uint[] data)
+        private void UpdatePlot(ReadOnlyMemory<uint> data)
         {
             if (!Dispatcher.CheckAccess())
             {
@@ -84,12 +84,14 @@ namespace TRS2
             if (!initialized)
                 InitDisplay();
 
+            ReadOnlySpan<uint> values = data.Span;
+
             lock (PlotView.Plot.Sync)
             {
-                int n = Math.Min(data.Length, y.Length);
+                int n = Math.Min(values.Length, y.Length);
 
                 for (int i = 0; i < n; i++)
-                    y[i] = data[i] > 0 ? Math.Log10(data[i]) : double.NaN;
+                    y[i] = values[i] > 0 ? Math.Log10(values[i]) : double.NaN;
 
                 for (int i = n; i < y.Length; i++)
                     y[i] = double.NaN;

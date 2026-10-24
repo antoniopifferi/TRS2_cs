@@ -5,7 +5,7 @@ namespace TRS2
     public static class Display
     {
         internal static event Action? InitRequested;
-        internal static event Action<uint[]>? Updated;
+        internal static event Action<ReadOnlyMemory<uint>>? Updated;
         internal static event Action<string>? TextRequested;
 
         public static void Init()
@@ -13,14 +13,14 @@ namespace TRS2
             InitRequested?.Invoke();
         }
 
-        public static void LogPlot(uint[] data)
+        public static void LogPlot()
         {
-            Updated?.Invoke(data);
+            Updated?.Invoke(Run.data!.Slice);
         }
 
-        public static void Text(string TextString)
+        public static void Text(string textString)
         {
-            TextRequested?.Invoke(TextString);
+            TextRequested?.Invoke(textString);
         }
     }
 }

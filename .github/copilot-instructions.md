@@ -13,6 +13,8 @@
 - For configuration selectors backed by numeric indices, use zero-based integer properties with UI labels translated to one-based names; this also applies to Set.Step.Loop.
 - Keep code short and simple, following the existing project style with minimal spacing and abstraction.
 - Prefer shorter, simpler code and minimal ceremony when implementing features.
+- The data model must support plotting and analysis from both Archive slices and the temporary slice. Archive owns complete slices divided into pages; Temp is one temporary slice overwritten after consumption. Prefer a simple architecture with copying only at clear storage boundaries and attention to performance.
+- Display.LogPlot() must directly invoke Updated with the shared current slice, avoiding local variables and null-check boilerplate when Run.data is guaranteed initialized before plotting.
 
 ## GUI Control Requirements
 - Create a reusable table-like group control for the GUI with the following specifications:

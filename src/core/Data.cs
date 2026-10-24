@@ -7,12 +7,10 @@ namespace TRS2
     public sealed class Data
     {
         private readonly TypeData[] ringData;
-
-        // Complete contiguous storage for all archive slices.
         public readonly TypeData[] Archive;
-
         public readonly TypeData[] Temp;
 
+        public Memory<TypeData> Slice;
 
         public readonly int NumBins; // number of bins for a single detector/histogram
         public readonly int NumPages; // number of detectors/histograms per acquisition
@@ -20,8 +18,6 @@ namespace TRS2
         public readonly int NumAcq;   // number of acquisitions in the ring buffer
         public readonly int NumSlices;   // number of slices in the archive
 
-
-        // Written only by producer / consumer respectively.
         public long Produced;
         public long Consumed;
 
@@ -41,27 +37,27 @@ namespace TRS2
         public Span<TypeData> Ring(int slot) =>
             ringData.AsSpan(slot * NumElem, NumElem);
 
-        // One slice within the contiguous archive.
-        public Span<TypeData> Slice(int slice) =>
-            Archive.AsSpan(slice * NumElem, NumElem);
-
         public void CopyArchive(int slice)
         {
-            long n = Volatile.Read(ref Consumed);
-            while (n >= Volatile.Read(ref Produced))
-                Thread.Yield();
-            Ring((int)(n % NumAcq)).CopyTo(Slice(slice));
-            Volatile.Write(ref Consumed, n + 1);
+            Slice = Archive.AsMemory(slice * NumElem, NumElem);
+            CopyNext(Slice);
         }
 
         public void CopyTemp()
         {
+            Slice = Temp.AsMemory();
+            CopyNext(Slice);
+        }
+
+        void CopyNext(Memory<TypeData> destination)
+        {
             long n = Volatile.Read(ref Consumed);
+
             while (n >= Volatile.Read(ref Produced))
                 Thread.Yield();
-            Ring((int)(n % NumAcq)).CopyTo(Temp);
-            Volatile.Write(ref Consumed, n + 1);
 
+            Ring((int)(n % NumAcq)).CopyTo(destination.Span);
+            Volatile.Write(ref Consumed, n + 1);
         }
     }
 }
