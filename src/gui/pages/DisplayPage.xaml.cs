@@ -7,13 +7,36 @@ namespace TRS2
     public partial class DisplayPage : Page
     {
         private readonly double[] x = new double[Set.Spc.NumBins];
-        private readonly double[] y = new double[Set.Spc.NumBins];
-        private Scatter? points;
+        private readonly double[][] y = new double[Konst.MAX_CURVE][];
+        private readonly Scatter?[] points = new Scatter?[Konst.MAX_CURVE];
+
+        private readonly ScottPlot.Color[] colors =
+        [
+            ScottPlot.Colors.Yellow,
+            ScottPlot.Colors.Red,
+            ScottPlot.Colors.Blue,
+            ScottPlot.Colors.Green,
+            ScottPlot.Colors.Orange,
+            ScottPlot.Colors.Purple,
+            ScottPlot.Colors.Cyan,
+            ScottPlot.Colors.Magenta,
+            ScottPlot.Colors.Lime,
+            ScottPlot.Colors.Gold,
+            ScottPlot.Colors.Pink,
+            ScottPlot.Colors.Brown,
+            ScottPlot.Colors.Teal,
+            ScottPlot.Colors.Violet,
+            ScottPlot.Colors.Coral,
+            ScottPlot.Colors.SkyBlue
+        ];
+
+        private int numPages;
         private bool initialized;
 
         public DisplayPage()
         {
             InitializeComponent();
+
             Display.InitRequested += InitDisplay;
             Display.Updated += UpdatePlot;
             Display.TextRequested += AddText;
@@ -30,22 +53,31 @@ namespace TRS2
             if (initialized)
                 return;
 
+            numPages = Math.Min(Run.data!.NumPages, Konst.MAX_CURVE);
+
             for (int i = 0; i < x.Length; i++)
-            {
                 x[i] = i * Set.Spc.BinWidth;
-                y[i] = double.NaN;
+
+            for (int page = 0; page < numPages; page++)
+            {
+                y[page] = new double[x.Length];
+
+                for (int i = 0; i < y[page].Length; i++)
+                    y[page][i] = double.NaN;
+
+                points[page] = PlotView.Plot.Add.ScatterPoints(x, y[page]);
+                points[page]!.Color = colors[page];
+                points[page]!.MarkerSize = 3;
             }
 
-            points = PlotView.Plot.Add.ScatterPoints(x, y);
-            points.Color = ScottPlot.Colors.Yellow;
-            points.MarkerSize = 3;
-
-            PlotView.Plot.Axes.Left.TickGenerator = new ScottPlot.TickGenerators.NumericAutomatic
-            {
-                MinorTickGenerator = new ScottPlot.TickGenerators.LogDecadeMinorTickGenerator(),
-                IntegerTicksOnly = true,
-                LabelFormatter = v => $"1E{v:0}"
-            };
+            PlotView.Plot.Axes.Left.TickGenerator =
+                new ScottPlot.TickGenerators.NumericAutomatic
+                {
+                    MinorTickGenerator =
+                        new ScottPlot.TickGenerators.LogDecadeMinorTickGenerator(),
+                    IntegerTicksOnly = true,
+                    LabelFormatter = v => $"1E{v:0}"
+                };
 
             PlotView.Plot.Axes.SetLimitsY(0, 6);
             PlotView.Plot.Axes.SetLimitsX(0, (x.Length - 1) * Set.Spc.BinWidth);
@@ -58,10 +90,13 @@ namespace TRS2
             PlotView.Plot.DataBackground.Color = ScottPlot.Colors.Black;
             PlotView.Plot.Axes.Color(ScottPlot.Colors.Black);
 
-            PlotView.Plot.Grid.XAxisStyle.MajorLineStyle.Color = ScottPlot.Colors.White;
-            PlotView.Plot.Grid.YAxisStyle.MajorLineStyle.Color = ScottPlot.Colors.White;
+            PlotView.Plot.Grid.XAxisStyle.MajorLineStyle.Color =
+                ScottPlot.Colors.White;
+            PlotView.Plot.Grid.YAxisStyle.MajorLineStyle.Color =
+                ScottPlot.Colors.White;
             PlotView.Plot.Grid.YAxisStyle.MajorLineStyle.Width = 1.5f;
-            PlotView.Plot.Grid.YAxisStyle.MinorLineStyle.Color = ScottPlot.Colors.White.WithOpacity(.45);
+            PlotView.Plot.Grid.YAxisStyle.MinorLineStyle.Color =
+                ScottPlot.Colors.White.WithOpacity(.45);
             PlotView.Plot.Grid.YAxisStyle.MinorLineStyle.Width = 1;
 
             PlotView.Plot.Axes.Left.MajorTickStyle.Length = 8;
@@ -88,13 +123,26 @@ namespace TRS2
 
             lock (PlotView.Plot.Sync)
             {
-                int n = Math.Min(values.Length, y.Length);
+                for (int page = 0; page < numPages; page++)
+                {
+                    double[] pageY = y[page]!;
+                    int offset = page * x.Length;
 
-                for (int i = 0; i < n; i++)
-                    y[i] = values[i] > 0 ? Math.Log10(values[i]) : double.NaN;
+                    int count = offset < values.Length
+                        ? Math.Min(x.Length, values.Length - offset)
+                        : 0;
 
-                for (int i = n; i < y.Length; i++)
-                    y[i] = double.NaN;
+                    for (int i = 0; i < count; i++)
+                    {
+                        uint value = values[offset + i];
+                        pageY[i] = value > 0
+                            ? Math.Log10(value)
+                            : double.NaN;
+                    }
+
+                    for (int i = count; i < pageY.Length; i++)
+                        pageY[i] = double.NaN;
+                }
             }
 
             PlotView.Refresh();

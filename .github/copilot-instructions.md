@@ -15,6 +15,7 @@
 - Prefer shorter, simpler code and minimal ceremony when implementing features.
 - The data model must support plotting and analysis from both Archive slices and the temporary slice. Archive owns complete slices divided into pages; Temp is one temporary slice overwritten after consumption. Prefer a simple architecture with copying only at clear storage boundaries and attention to performance.
 - Display.LogPlot() must directly invoke Updated with the shared current slice, avoiding local variables and null-check boilerplate when Run.data is guaranteed initialized before plotting.
+- When modifying files, keep code compact: one instruction per line where practical, minimal blank lines, and avoid unnecessary vertical spacing or ceremony. Follow the existing concise project style.
 
 ## GUI Control Requirements
 - Create a reusable table-like group control for the GUI with the following specifications:
@@ -28,3 +29,4 @@
 
 ## Visualization Behavior
 - Implement specialized visualization behavior, such as CommunityToolkit On...Changed callbacks, grouped at the end of Set.cs.
+- For plot curve colors, use named ScottPlot colors (such as Yellow, Red, Blue) rather than hexadecimal colors, with the first curve using Yellow.
