@@ -16,6 +16,7 @@
 - The data model must support plotting and analysis from both Archive slices and the temporary slice. Archive owns complete slices divided into pages; Temp is one temporary slice overwritten after consumption. Prefer a simple architecture with copying only at clear storage boundaries and attention to performance.
 - Display.LogPlot() must directly invoke Updated with the shared current slice, avoiding local variables and null-check boilerplate when Run.data is guaranteed initialized before plotting.
 - When modifying files, keep code compact: one instruction per line where practical, minimal blank lines, and avoid unnecessary vertical spacing or ceremony. Follow the existing concise project style.
+- Use compact C# formatting: keep each instruction on one line, no blank lines except between class/function definitions, put opening braces on the declaration line and align closing braces with the body indentation, following Store.cs.
 
 ## GUI Control Requirements
 - Create a reusable table-like group control for the GUI with the following specifications:

@@ -10,8 +10,7 @@ namespace TRS2
         public static Data? data;
         private static Spc? spc;
 
-        private static class Action
-        {
+        private static class Action {
             public static bool Oscill;
             public static bool moveStep;
             public static bool startSpc;
@@ -22,14 +21,11 @@ namespace TRS2
             public static bool Save;
         }
 
-        private static void decideAction()
-        {
+        private static void decideAction() {
             bool[] firstloop = new bool[Konst.MAX_LOOP];
-            bool[] newloop   = new bool[Konst.MAX_LOOP];
-            bool[] lastloop  = new bool[Konst.MAX_LOOP];
-    
-            for (int iL = 0; iL < Konst.MAX_LOOP; iL++)
-            {
+            bool[] newloop = new bool[Konst.MAX_LOOP];
+            bool[] lastloop = new bool[Konst.MAX_LOOP];
+            for (int iL = 0; iL < Konst.MAX_LOOP; iL++) {
                 firstloop[iL] = (Set.Loop[iL].Actual == 0);
                 lastloop[iL] = (Set.Loop[iL].Actual == Set.Loop[iL].Num - 1);
                 if (iL == 0) newloop[iL] = false; else newloop[iL] = firstloop[iL - 1];
@@ -43,30 +39,24 @@ namespace TRS2
             Action.displayPlot = true;
         }
 
-        private static void loopGet(int loop)
-        {
+        private static void loopGet(int loop) {
             int l = loop;
-            for (int iL = 0; iL < Konst.MAX_LOOP; iL++)
-            {
-                if (Set.Loop[iL].Num > 0)
-                {
+            for (int iL = 0; iL < Konst.MAX_LOOP; iL++) {
+                if (Set.Loop[iL].Num > 0) {
                     Set.Loop[iL].Actual = l % Set.Loop[iL].Num;
                     l /= Set.Loop[iL].Num;
                 }
-                else
-                {
+                else {
                     Set.Loop[iL].Actual = 0;
                 }
             }
         }
 
-        public static void Oscill()
-        {
+        public static void Oscill() {
             Display.Text("Oscilloscope, press CONTINUE to go on");
             spc?.Start(Set.Spc.TimeOscill);
 
-            while (!Set.Display.Continue)
-            {
+            while (!Set.Display.Continue) {
                 data.CopyTemp();
                 Display.LogPlot();
             }
@@ -76,18 +66,14 @@ namespace TRS2
             spc?.isTrash = true;
         }
 
-        public static void Measure()
-        {
-
+        public static void Measure() {
             data = new Data();
 
-            spc = Set.Spc.Type switch
-            {
+            spc = Set.Spc.Type switch {
                 "TEST" => new SpcTest(),
                 "NONE" => null // No SPC device selected, do nothing
             };
             spc?.Init();
-
 
             Display.Init();
             Store.Init();
@@ -102,10 +88,7 @@ namespace TRS2
             //bool status = false;
 
             Display.Text("Measurement started");
-            while (loop < Set.Loop[0].Num * Set.Loop[1].Num *
-                    Set.Loop[2].Num * Set.Loop[3].Num *
-                    Set.Loop[4].Num)
-                {
+            while (loop < Set.Loop[0].Num * Set.Loop[1].Num * Set.Loop[2].Num * Set.Loop[3].Num * Set.Loop[4].Num) {
                 Display.Text("Loop " + loop + " started");
                 loopGet(loop);
                 decideAction();

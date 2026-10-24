@@ -1,13 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace TRS2
-{
-    public static partial class Out
-    {
+namespace TRS2 {
+    public static partial class Out {
         public static Group2Data Group2 = new();
 
-        public partial class Group2Data : ObservableObject
-        {
+        public partial class Group2Data : ObservableObject {
             [ObservableProperty]
             private int int2 = 2;
 
@@ -16,6 +13,6 @@ namespace TRS2
 
             [ObservableProperty]
             private string string2 = "Value 2";
-        }
+            }
     }
 }

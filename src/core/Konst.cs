@@ -1,7 +1,5 @@
-namespace TRS2
-{
-    public static class Konst
-    {
+namespace TRS2 {
+    public static class Konst {
         public const string AppName = "TRS2";
         public const int MAX_LOOP = 5;
         public const int MAX_STEP = 10;
@@ -21,5 +19,5 @@ namespace TRS2
         public const int HEAD_IS_SUB = 0;
         public const int MAX_ACQ = 512; // max number of slots for acq (full slice) in ring array
         public const int MAX_CURVE = 16; // max number of curves in plot
-    }
+        }
 }
