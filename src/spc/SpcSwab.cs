@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SwabianInstruments.TimeTagger;
+using System;
 using TypeData = System.UInt32; // 4 bytes
 
 namespace TRS2
@@ -9,7 +10,8 @@ namespace TRS2
 
         protected override void InitDev()
         {
-            //TimeTagger tt = TT.createTimeTagger();
+            TimeTaggerVirtual tt = TT.createTimeTaggerVirtual();
+            //Display.Text("Serial number: " + tt.getSerial());
         }
         protected override void CloseDev()
         {
