@@ -9,8 +9,9 @@ namespace TRS2 {
         public StoreData Store { get; set; } = new();
         public DisplayData Display { get; set; } = new();
         public LoopData[] Loop { get; set; } = CreateArray(Konst.MAX_LOOP, i => new LoopData(i + 1));
-        public Step[] Steps { get; set; } = CreateArray(Konst.MAX_STEP, i => new Step(i + 1));
-        public Trim[] Trims { get; set; } = CreateArray(Konst.MAX_TRIM, i => new Trim(i + 1));
+        public StepData[] Step { get; set; } = CreateArray(Konst.MAX_STEP, i => new StepData(i + 1));
+        public TrimData[] Trim { get; set; } = CreateArray(Konst.MAX_TRIM, i => new TrimData(i + 1));
+        public RoiData[] Roi { get; set; } = CreateArray(Konst.MAX_ROI, i => new RoiData(i + 1));
 
         // definitions of classes used in Set
         public partial class Group1Data {
@@ -32,6 +33,13 @@ namespace TRS2 {
             public double BinWidth { get; set; } = 1.0;
             public int NumDet { get; set; } = 1;
             public int NumBoard { get; set; } = 1;
+        }
+
+        public partial class RoiData {
+            public RoiData(int number) { Number = number; }
+            public int Number { get; }
+            public int Low { get; set; } = 0;
+            public int High { get; set; } = 4095;
         }
 
         public partial class StoreData {
@@ -66,8 +74,8 @@ namespace TRS2 {
             partial void OnDeltaChanged(int value) => OnPropertyChanged(nameof(Num));
         }
 
-        public partial class Step {
-            public Step(int number) { Number = number; }
+        public partial class StepData {
+            public StepData(int number) { Number = number; }
             public int Number { get; }
             public string Type { get; set; } = "NONE";
             public int Com { get; set; }
@@ -88,8 +96,8 @@ namespace TRS2 {
             public bool Sort { get; set; }
         }
 
-        public partial class Trim {
-            public Trim(int number) { Number = number; }
+        public partial class TrimData {
+            public TrimData(int number) { Number = number; }
             public int Number { get; }
             public int Step { get; set; } = -1;
             public int Loop { get; set; } = -1;

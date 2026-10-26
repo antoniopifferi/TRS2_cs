@@ -4,6 +4,7 @@ namespace TRS2 {
         public const int MAX_LOOP = 5;
         public const int MAX_STEP = 10;
         public const int MAX_TRIM = 10;
+        public const int MAX_ROI = 32;
         public const double TEST_MUS = 10.0; // cm-1
         public const double TEST_MUA = 0.1; // cm-1
         public const double TEST_RHO = 1.0; // cm

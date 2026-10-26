@@ -27,10 +27,10 @@ namespace TRS2 {
                 IsBackground = true
             };
 
-            if (isTrash) {
-                Volatile.Write(ref data.Consumed, Volatile.Read(ref data.Produced));
-            }
-
+            //if (isTrash) {
+            //    Volatile.Write(ref data.Consumed, Volatile.Read(ref data.Produced));
+            //    isTrash = false;
+            //}
             acquisition.Start();
         }
 
@@ -39,9 +39,9 @@ namespace TRS2 {
 
             // StopDev should also unblock WaitDev if it is waiting on hardware.
             StopDev();
-
             acquisition?.Join();
             acquisition = null;
+            Volatile.Write(ref data.Consumed, Volatile.Read(ref data.Produced));
         }
 
         public void Close() {
