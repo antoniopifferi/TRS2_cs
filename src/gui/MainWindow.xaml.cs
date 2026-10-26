@@ -10,6 +10,7 @@ namespace TRS2 {
         public StepPage StepPage;
         public TrimPage TrimPage;
         public DisplayPage DisplayPage;
+        public SwabPage SwabPage;
 
         public MainWindow() {
             InitializeComponent();
@@ -18,12 +19,14 @@ namespace TRS2 {
             StepPage = new();
             TrimPage = new();
             DisplayPage = new();
+            SwabPage = new();
             LoadSetFile(Konst.FILE_SET);
 
             // IMPORTANT: Connect pages to the global Set object
             ParmPage.DataContext = Set;
             StepPage.DataContext = Set;
             TrimPage.DataContext = Set;
+            SwabPage.DataContext = Set;
 
             MainFrame.Navigate(ParmPage);
         }
@@ -47,6 +50,10 @@ namespace TRS2 {
 
         private void OpenDisplayPage(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(DisplayPage);
+        }
+
+        private void OpenSwabPage(object sender, RoutedEventArgs e) {
+            MainFrame.Navigate(SwabPage);
         }
 
         private void SaveSet(object sender, RoutedEventArgs e) {
@@ -79,6 +86,7 @@ namespace TRS2 {
             ParmPage.DataContext = Set;
             StepPage.DataContext = Set;
             TrimPage.DataContext = Set;
+            SwabPage.DataContext = Set;
         }
 
         private void RunOscilloscope(object sender, RoutedEventArgs e) {

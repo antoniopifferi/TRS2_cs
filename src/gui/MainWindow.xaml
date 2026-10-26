@@ -27,6 +27,9 @@
                 <MenuItem Header="Trim" Click="OpenTrimPage" />
                 <MenuItem Header="Display" Click="OpenDisplayPage" />
             </MenuItem>
+            <MenuItem Header="Device">
+                <MenuItem Header="Swab" Click="OpenSwabPage" />
+            </MenuItem>
             <MenuItem Header="Action">
                 <MenuItem Header="Oscilloscope" Click="RunOscilloscope" />
                 <MenuItem Header="Measure" Click="RunMeasure" />

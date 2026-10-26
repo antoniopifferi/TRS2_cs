@@ -49,7 +49,12 @@
             <GroupBox Header="Spc"
                       DataContext="{Binding Spc}">
                 <StackPanel>
-                    <local:ParmRow Header="Type"><ComboBox SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content"><ComboBoxItem Content="NONE" /><ComboBoxItem Content="TEST" /></ComboBox></local:ParmRow>
+                    <local:ParmRow Header="Type">
+                        <ComboBox SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                            <ComboBoxItem Content="NONE" />
+                            <ComboBoxItem Content="TEST" />
+                            <ComboBoxItem Content="SWAB" />
+                        </ComboBox></local:ParmRow>
                     <local:ParmRow Header="Wait"><TextBox Text="{Binding Wait, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
                     <local:ParmRow Header="TimeMeas"><TextBox Text="{Binding TimeMeas, UpdateSourceTrigger=LostFocus}" /></local:ParmRow>
                     <local:ParmRow Header="TimeOscill"><TextBox Text="{Binding TimeOscill, UpdateSourceTrigger=LostFocus}" /></local:ParmRow>

@@ -28,6 +28,7 @@
   - Mixed repeated row control types across columns
   - Bound to simple Set classes like Set.Loop[index].Home
   - Maintain a very simple overall structure with minimal insertion effort for new rows/controls.
+- For WPF settings pages, place Boolean setting labels on the left and bind a separate CheckBox control on the right, following ParmPage's ParmRow pattern.
 
 ## Visualization Behavior
 - Implement specialized visualization behavior, such as CommunityToolkit On...Changed callbacks, grouped at the end of Set.cs.

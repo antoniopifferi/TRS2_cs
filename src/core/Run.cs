@@ -71,6 +71,7 @@ namespace TRS2
 
             spc = Set.Spc.Type switch {
                 "TEST" => new SpcTest(),
+                "SWAB" => new SpcSwab(),
                 "NONE" => null // No SPC device selected, do nothing
             };
             spc?.Init();

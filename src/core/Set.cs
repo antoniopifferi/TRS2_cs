@@ -6,6 +6,7 @@ namespace TRS2 {
         public Group1Data Group1 { get; set; } = new();
         public Group3Data Group3 { get; set; } = new();
         public SpcData Spc { get; set; } = new();
+        public SwabData Swab { get; set; } = new();
         public StoreData Store { get; set; } = new();
         public DisplayData Display { get; set; } = new();
         public LoopData[] Loop { get; set; } = CreateArray(Konst.MAX_LOOP, i => new LoopData(i + 1));
@@ -33,6 +34,29 @@ namespace TRS2 {
             public double BinWidth { get; set; } = 1.0;
             public int NumDet { get; set; } = 1;
             public int NumBoard { get; set; } = 1;
+        }
+
+        public partial class SwabData {
+            public string Type { get; set; } = "REAL";
+            public string Meas { get; set; } = "HIST";
+            public bool SaveTags { get; set; }
+            public string SplitFile { get; set; } = "NO";
+            public string FileVirt { get; set; } = @"C:\Temp\Temp";
+            public int FrequencyDivider { get; set; }
+            public int FrequencyMultiplier { get; set; }
+            public bool Filter { get; set; }
+            public SettingData[] Setting { get; set; } = CreateArray(18, i => new SettingData(i + 1));
+
+            public partial class SettingData {
+                public SettingData(int number) { Number = number; }
+                public int Number { get; }
+                public string Channel => $"Channel{Number:00}";
+                public string Type { get; set; } = "NONE";
+                public double Level { get; set; }
+                public int Delay { get; set; }
+                public int Deadtime { get; set; }
+                public string Hysteresis { get; set; } = "none";
+            }
         }
 
         public partial class RoiData {
