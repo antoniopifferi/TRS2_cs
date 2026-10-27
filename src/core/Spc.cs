@@ -14,7 +14,7 @@ namespace TRS2 {
         protected Spc() { }
 
         public void Init() {
-            Display.Text("initialising SPC " + Set.Spc.Type + "...");
+            Display.Text("initialising SPC " + Set.Spc.Type + "...",false);
             Buffer = new TypeData[Set.Spc.NumBins * Set.Spc.NumDet * Set.Spc.NumBoard];
             InitDev();
             Display.Text("SUCCESS");

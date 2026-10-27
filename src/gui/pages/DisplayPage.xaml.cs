@@ -2,8 +2,10 @@
 using System;
 using System.Windows.Controls;
 
-namespace TRS2 {
-    public partial class DisplayPage : Page {
+namespace TRS2
+{
+    public partial class DisplayPage : Page
+    {
         private readonly double[] x = new double[Set.Spc.NumBins];
         private readonly double[][] y = new double[Konst.MAX_CURVE][];
         private readonly Scatter?[] points = new Scatter?[Konst.MAX_CURVE];
@@ -30,7 +32,8 @@ namespace TRS2 {
         private int numPages;
         private bool initialized;
 
-        public DisplayPage() {
+        public DisplayPage()
+        {
             InitializeComponent();
 
             Display.InitRequested += InitDisplay;
@@ -38,8 +41,10 @@ namespace TRS2 {
             Display.TextRequested += AddText;
         }
 
-        private void InitDisplay() {
-            if (!Dispatcher.CheckAccess()) {
+        private void InitDisplay()
+        {
+            if (!Dispatcher.CheckAccess())
+            {
                 Dispatcher.Invoke(InitDisplay);
                 return;
             }
@@ -50,7 +55,8 @@ namespace TRS2 {
 
             for (int i = 0; i < x.Length; i++) x[i] = i * Set.Spc.BinWidth;
 
-            for (int page = 0; page < numPages; page++) {
+            for (int page = 0; page < numPages; page++)
+            {
                 y[page] = new double[x.Length];
 
                 for (int i = 0; i < y[page].Length; i++) y[page][i] = double.NaN;
@@ -60,11 +66,12 @@ namespace TRS2 {
                 points[page]!.MarkerSize = 3;
             }
 
-            PlotView.Plot.Axes.Left.TickGenerator = new ScottPlot.TickGenerators.NumericAutomatic {
-                    MinorTickGenerator = new ScottPlot.TickGenerators.LogDecadeMinorTickGenerator(),
-                    IntegerTicksOnly = true,
-                    LabelFormatter = v => $"1E{v:0}"
-                    };
+            PlotView.Plot.Axes.Left.TickGenerator = new ScottPlot.TickGenerators.NumericAutomatic
+            {
+                MinorTickGenerator = new ScottPlot.TickGenerators.LogDecadeMinorTickGenerator(),
+                IntegerTicksOnly = true,
+                LabelFormatter = v => $"1E{v:0}"
+            };
 
             PlotView.Plot.Axes.SetLimitsY(0, 6);
             PlotView.Plot.Axes.SetLimitsX(0, (x.Length - 1) * Set.Spc.BinWidth);
@@ -92,8 +99,10 @@ namespace TRS2 {
             PlotView.Refresh();
         }
 
-        private void UpdatePlot(ReadOnlyMemory<uint> data) {
-            if (!Dispatcher.CheckAccess()) {
+        private void UpdatePlot(ReadOnlyMemory<uint> data)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
                 Dispatcher.Invoke(() => UpdatePlot(data));
                 return;
             }
@@ -102,14 +111,17 @@ namespace TRS2 {
 
             ReadOnlySpan<uint> values = data.Span;
 
-            lock (PlotView.Plot.Sync) {
-                for (int page = 0; page < numPages; page++) {
+            lock (PlotView.Plot.Sync)
+            {
+                for (int page = 0; page < numPages; page++)
+                {
                     double[] pageY = y[page]!;
                     int offset = page * x.Length;
 
                     int count = offset < values.Length ? Math.Min(x.Length, values.Length - offset) : 0;
 
-                    for (int i = 0; i < count; i++) {
+                    for (int i = 0; i < count; i++)
+                    {
                         uint value = values[offset + i];
                         pageY[i] = value > 0 ? Math.Log10(value) : double.NaN;
                     }
@@ -121,18 +133,20 @@ namespace TRS2 {
             PlotView.Refresh();
         }
 
-        private void AddText(string text) {
-            if (!Dispatcher.CheckAccess()) {
-                Dispatcher.Invoke(() => AddText(text));
+        private void AddText(string text, bool appendNewLine = true)
+        {
+            if (!Dispatcher.CheckAccess())
+            {
+                Dispatcher.Invoke(() => AddText(text, appendNewLine));
                 return;
             }
-
-            DisplayText.AppendText(text + Environment.NewLine);
+            DisplayText.AppendText(appendNewLine ? text + Environment.NewLine : text);
             DisplayText.ScrollToEnd();
         }
 
-        private void Continue(object sender, System.Windows.RoutedEventArgs e) {
+        private void Continue(object sender, System.Windows.RoutedEventArgs e)
+        {
             Set.Display.Continue = true;
-            }
         }
+    }
 }

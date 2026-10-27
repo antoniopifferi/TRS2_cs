@@ -4,7 +4,7 @@ namespace TRS2 {
     public static class Display {
         internal static event Action? InitRequested;
         internal static event Action<ReadOnlyMemory<uint>>? Updated;
-        internal static event Action<string>? TextRequested;
+        internal static event Action<string, bool>? TextRequested;
 
         public static void Init() {
             InitRequested?.Invoke();
@@ -14,8 +14,8 @@ namespace TRS2 {
             Updated?.Invoke(Run.data!.Slice);
         }
 
-        public static void Text(string textString) {
-            TextRequested?.Invoke(textString);
-            }
+        public static void Text(string textString, bool appendNewLine = true) {
+            TextRequested?.Invoke(textString, appendNewLine);
         }
+    }
 }

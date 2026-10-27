@@ -7,11 +7,18 @@ namespace TRS2
     public class SpcSwab : Spc
     {
         private double _seconds;
+        private TimeTaggerBase? _tt=null;
 
         protected override void InitDev()
         {
-            TimeTaggerVirtual tt = TT.createTimeTaggerVirtual();
-            //Display.Text("Serial number: " + tt.getSerial());
+            if(Set.Swab.Type == "REAL") { 
+                _tt = TT.createTimeTagger();
+                Display.Text("Serial number: " + ((TimeTagger)_tt).getSerial() + "...", false);
+            }
+            if (Set.Swab.Type == "VIRTUAL") {
+                _tt = TT.createTimeTaggerVirtual();
+                Display.Text("Virtual TimeTagger created...", false);
+            }
         }
         protected override void CloseDev()
         {
