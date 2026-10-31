@@ -54,34 +54,29 @@
                             <ComboBoxItem Content="NONE" />
                             <ComboBoxItem Content="TEST" />
                             <ComboBoxItem Content="SWAB" />
-                        </ComboBox></local:ParmRow>
-                    <local:ParmRow Header="Wait"><TextBox Text="{Binding Wait, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                    <local:ParmRow Header="TimeMeas"><TextBox Text="{Binding TimeMeas, UpdateSourceTrigger=LostFocus}" /></local:ParmRow>
-                    <local:ParmRow Header="TimeOscill"><TextBox Text="{Binding TimeOscill, UpdateSourceTrigger=LostFocus}" /></local:ParmRow>
-                    <local:ParmRow Header="NumBins"><TextBox Text="{Binding NumBins, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                    <local:ParmRow Header="BinWidth"><TextBox Text="{Binding BinWidth, UpdateSourceTrigger=LostFocus}" /></local:ParmRow>
-                    <local:ParmRow Header="NumDet"><TextBox Text="{Binding NumDet, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                    <local:ParmRow Header="NumBoard"><TextBox Text="{Binding NumBoard, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                </StackPanel>
-            </GroupBox>
-
-
-            <GroupBox Header="Group1"
-                      DataContext="{Binding Group1}">
-                <StackPanel>
-                    <local:ParmRow Header="Int1"><TextBox Text="{Binding Int1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                    <local:ParmRow Header="Double1"><TextBox Text="{Binding Double1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                    <local:ParmRow Header="String1"><TextBox Text="{Binding String1, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                </StackPanel>
-            </GroupBox>
-
-
-            <GroupBox Header="Group2"
-                      DataContext="{x:Static local:Out.Group2}">
-                <StackPanel>
-                    <local:ParmRow Header="Int2"><TextBox Text="{Binding Int2, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                    <local:ParmRow Header="Double2"><TextBox Text="{Binding Double2, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                    <local:ParmRow Header="String2"><TextBox Text="{Binding String2, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                        </ComboBox>
+                    </local:ParmRow>
+                    <local:ParmRow Header="Wait">
+                        <TextBox Text="{Binding Wait, UpdateSourceTrigger=PropertyChanged}" />
+                    </local:ParmRow>
+                    <local:ParmRow Header="TimeMeas">
+                        <TextBox Text="{Binding TimeMeas, UpdateSourceTrigger=LostFocus}" />
+                    </local:ParmRow>
+                    <local:ParmRow Header="TimeOscill">
+                        <TextBox Text="{Binding TimeOscill, UpdateSourceTrigger=LostFocus}" />
+                    </local:ParmRow>
+                    <local:ParmRow Header="NumBins">
+                        <TextBox Text="{Binding NumBins, UpdateSourceTrigger=PropertyChanged}" />
+                    </local:ParmRow>
+                    <local:ParmRow Header="BinWidth">
+                        <TextBox Text="{Binding BinWidth, UpdateSourceTrigger=LostFocus}" />
+                    </local:ParmRow>
+                    <local:ParmRow Header="NumDet">
+                        <TextBox Text="{Binding NumDet, UpdateSourceTrigger=PropertyChanged}" />
+                    </local:ParmRow>
+                    <local:ParmRow Header="NumBoard">
+                        <TextBox Text="{Binding NumBoard, UpdateSourceTrigger=PropertyChanged}" />
+                    </local:ParmRow>
                 </StackPanel>
             </GroupBox>
 

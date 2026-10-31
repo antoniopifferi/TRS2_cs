@@ -19,9 +19,30 @@
                         <local:ParmRow Header="SaveTags"><CheckBox IsChecked="{Binding SaveTags, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
                         <local:ParmRow Header="SplitFile"><ComboBox SelectedValue="{Binding SplitFile, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content"><ComboBoxItem Content="NO" /><ComboBoxItem Content="LOOP1" /><ComboBoxItem Content="LOOP2" /><ComboBoxItem Content="LOOP3" /><ComboBoxItem Content="LOOP4" /><ComboBoxItem Content="LOOP5" /></ComboBox></local:ParmRow>
                         <local:ParmRow Header="FileVirt"><TextBox Text="{Binding FileVirt, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
-                        <local:ParmRow Header="Frequency Divider"><TextBox Text="{Binding FrequencyDivider, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                      <local:ParmRow Header="Start">
+                        <ComboBox SelectedValue="{Binding Start, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                          <ComboBoxItem Content="NONE" />
+                          <ComboBoxItem Content="SYNC" />
+                          <ComboBoxItem Content="SIGN" />
+                        </ComboBox>
+                      </local:ParmRow>
+                      <local:ParmRow Header="Reverse">
+                        <CheckBox IsChecked="{Binding Reverse, UpdateSourceTrigger=PropertyChanged}" />
+                      </local:ParmRow>
+                      <local:ParmRow Header="Frequency Divider"><TextBox Text="{Binding FrequencyDivider, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
                         <local:ParmRow Header="Frequency Multiplier"><TextBox Text="{Binding FrequencyMultiplier, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                        <local:ParmRow Header="Filtered Channel"><ComboBox SelectedValue="{Binding FilteredChannel, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                          <ComboBoxItem Content="NONE" />
+                          <ComboBoxItem Content="SYNC" />
+                          <ComboBoxItem Content="SIGN" />
+                        </ComboBox></local:ParmRow>
                         <local:ParmRow Header="Filter"><CheckBox IsChecked="{Binding Filter, UpdateSourceTrigger=PropertyChanged}" /></local:ParmRow>
+                      <local:ParmRow Header="Meas">
+                        <ComboBox SelectedValue="{Binding Meas, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content">
+                          <ComboBoxItem Content="HIST" />
+                          <ComboBoxItem Content="CORR" />
+                        </ComboBox>
+                      </local:ParmRow>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="SwabSetting" Grid.Column="1">
@@ -35,7 +56,7 @@
                         <DataGridTextColumn Header="Delay (ps)" Binding="{Binding Delay, UpdateSourceTrigger=PropertyChanged}" Width="90" />
                         <DataGridTextColumn Header="Deadtime (ps)" Binding="{Binding Deadtime, UpdateSourceTrigger=PropertyChanged}" Width="105" />
                         <DataGridTemplateColumn Header="Hysteresis" Width="100">
-                            <DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox SelectedValue="{Binding Hysteresis, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content"><ComboBoxItem Content="none" /><ComboBoxItem Content="1 mV" /><ComboBoxItem Content="20 mV" /><ComboBoxItem Content="70 mV" /></ComboBox></DataTemplate></DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox SelectedValue="{Binding Hysteresis, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Tag"><ComboBoxItem Content="none" Tag="0" /><ComboBoxItem Content="1mV" Tag="1" /><ComboBoxItem Content="20mV" Tag="20" /><ComboBoxItem Content="70mV" Tag="70" /></ComboBox></DataTemplate></DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>

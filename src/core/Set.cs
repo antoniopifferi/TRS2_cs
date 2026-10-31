@@ -3,8 +3,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 namespace TRS2 {
     public partial class SetData {
         // members of Set
-        public Group1Data Group1 { get; set; } = new();
-        public Group3Data Group3 { get; set; } = new();
         public SpcData Spc { get; set; } = new();
         public SwabData Swab { get; set; } = new();
         public StoreData Store { get; set; } = new();
@@ -13,17 +11,6 @@ namespace TRS2 {
         public StepData[] Step { get; set; } = CreateArray(Konst.MAX_STEP, i => new StepData(i + 1));
         public TrimData[] Trim { get; set; } = CreateArray(Konst.MAX_TRIM, i => new TrimData(i + 1));
         public RoiData[] Roi { get; set; } = CreateArray(Konst.MAX_ROI, i => new RoiData(i + 1));
-
-        // definitions of classes used in Set
-        public partial class Group1Data {
-            public int Int1 { get; set; } = 1;
-            public double Double1 { get; set; } = 1.1;
-            public string String1 { get; set; } = "Value 1";
-        }
-
-        public partial class Group3Data {
-            public string String3 { get; set; } = "Value 3";
-        }
 
         public partial class SpcData {
             public string Type { get; set; } = "TEST";
@@ -39,12 +26,15 @@ namespace TRS2 {
         public partial class SwabData {
             public string Type { get; set; } = "REAL";
             public string Meas { get; set; } = "HIST";
+            public string Start { get; set; } = "SYNC";
+            public string FilteredChannel { get; set; } = "SYNC";
             public bool SaveTags { get; set; }
             public string SplitFile { get; set; } = "NO";
             public string FileVirt { get; set; } = @"C:\Temp\Temp";
-            public int FrequencyDivider { get; set; }
-            public int FrequencyMultiplier { get; set; }
+            public uint FrequencyDivider { get; set; }
+            public uint FrequencyMultiplier { get; set; }
             public bool Filter { get; set; }
+            public bool Reverse { get; set; }
             public SettingData[] Setting { get; set; } = CreateArray(18, i => new SettingData(i + 1));
 
             public partial class SettingData {
@@ -55,7 +45,7 @@ namespace TRS2 {
                 public double Level { get; set; }
                 public int Delay { get; set; }
                 public int Deadtime { get; set; }
-                public string Hysteresis { get; set; } = "none";
+                public int Hysteresis { get; set; } = 0;
             }
         }
 
