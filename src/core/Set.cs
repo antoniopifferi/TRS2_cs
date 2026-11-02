@@ -12,15 +12,22 @@ namespace TRS2 {
         public TrimData[] Trim { get; set; } = CreateArray(Konst.MAX_TRIM, i => new TrimData(i + 1));
         public RoiData[] Roi { get; set; } = CreateArray(Konst.MAX_ROI, i => new RoiData(i + 1));
 
-        public partial class SpcData {
-            public string Type { get; set; } = "TEST";
+        public partial class SpcData : ObservableObject {
+            [ObservableProperty] private string type = "TEST";
             public string Wait { get; set; } = "SPC";
             public double TimeMeas { get; set; } = 1.0;
             public double TimeOscill { get; set; } = 1.0;
             public int NumBins { get; set; } = 4096;
             public double BinWidth { get; set; } = 1.0;
-            public int NumDet { get; set; } = 1;
+            [ObservableProperty] private int numDet = 1;
             public int NumBoard { get; set; } = 1;
+
+            // support function to change NumDet when Type is changed
+            partial void OnTypeChanged(string value)
+            {
+                if (value == "SWAB")
+                    NumDet = Set.Swab.Setting.Count(s => s.Type == "SIGN");
+            }
         }
 
         public partial class SwabData {
@@ -37,15 +44,20 @@ namespace TRS2 {
             public bool Reverse { get; set; }
             public SettingData[] Setting { get; set; } = CreateArray(18, i => new SettingData(i + 1));
 
-            public partial class SettingData {
+            public partial class SettingData : ObservableObject {
                 public SettingData(int number) { Number = number; }
                 public int Number { get; }
                 public string Channel => $"Channel{Number:00}";
-                public string Type { get; set; } = "NONE";
+                [ObservableProperty] private string type = "NONE";
                 public double Level { get; set; }
                 public int Delay { get; set; }
                 public int Deadtime { get; set; }
                 public int Hysteresis { get; set; } = 0;
+
+                partial void OnTypeChanged(string value) {
+                    if (Set.Spc.Type == "SWAB")
+                        Set.Spc.NumDet = Set.Swab.Setting.Count(s => s.Type == "SIGN");
+                }
             }
         }
 
