@@ -49,17 +49,25 @@ namespace TRS2
                 return;
             }
 
-            if (initialized) return;
+            PlotView.Plot.Clear();
+
+            for (int page = 0; page < points.Length; page++)
+            {
+                points[page] = null;
+                y[page] = null!;
+            }
 
             numPages = Math.Min(Run.data!.NumPages, Konst.MAX_CURVE);
 
-            for (int i = 0; i < x.Length; i++) x[i] = i * Set.Spc.BinWidth;
+            for (int i = 0; i < x.Length; i++)
+                x[i] = i * Set.Spc.BinWidth;
 
             for (int page = 0; page < numPages; page++)
             {
                 y[page] = new double[x.Length];
 
-                for (int i = 0; i < y[page].Length; i++) y[page][i] = double.NaN;
+                for (int i = 0; i < y[page].Length; i++)
+                    y[page][i] = double.NaN;
 
                 points[page] = PlotView.Plot.Add.ScatterPoints(x, y[page]);
                 points[page]!.Color = colors[page];
@@ -75,7 +83,6 @@ namespace TRS2
 
             PlotView.Plot.Axes.SetLimitsY(0, 6);
             PlotView.Plot.Axes.SetLimitsX(0, (x.Length - 1) * Set.Spc.BinWidth);
-
             PlotView.Plot.Title("Histogram");
             PlotView.Plot.XLabel("Time (ps)");
             PlotView.Plot.YLabel("Counts");

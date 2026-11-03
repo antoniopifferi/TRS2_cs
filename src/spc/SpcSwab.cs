@@ -25,6 +25,7 @@ namespace TRS2
         private Histogram[] _histogram = new Histogram[SWAB_MAX_CHANN];
         private Correlation[] _correlation = new Correlation[SWAB_MAX_CHANN];
         private Int64 _binwidth=(Int64)(Set.Spc.BinWidth+0.1);
+        private int[][] _staging = []; // Staging buffer for data transfer
 
         protected override void InitDev()
         {
@@ -32,6 +33,8 @@ namespace TRS2
             _syncChannels = new int[1];
             int numSignChannels = 0;
             int numSyncChannels = 0;
+
+            _staging = new int[Set.Spc.NumDet][]; // initialise the staging buffer for each detector
             // complete channel arrays based on Set.Swab.Setting
             for (int ic = 0; ic < SWAB_MAX_CHANN; ic++)
             {
@@ -187,7 +190,24 @@ namespace TRS2
 
         protected override void GetDev()
         {
+            for (int id = 0; id < Set.Spc.NumDet; id++)
+                _staging[id] = Set.Swab.Meas switch
+                {
+                    "HIST" => _histogram[id].getData(),
+                    "CORR" => _correlation[id].getData(),
+                    _ => []
+                };
+        }
 
+        protected override void CopyDev(Span<TypeData> destination)
+        {
+            for (int id = 0; id < Set.Spc.NumDet; id++)
+            {
+                int[] source = _staging[id];
+                int offset = id * Set.Spc.NumBins;
+                for (int ic = 0; ic < source.Length; ic++)
+                    destination[offset + ic] = (TypeData)source[ic];
+            }
         }
     }
 }
