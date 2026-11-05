@@ -135,9 +135,10 @@ namespace TRS2
                 _histogram[id]?.Dispose(); _histogram[id] = null;
                 _correlation[id]?.Dispose(); _correlation[id] = null;
             }
-            _taggerReal?.Dispose(); _taggerReal = null;
-            _taggerVirtual?.Dispose(); _taggerVirtual = null;
-            _tagger?.Dispose(); _tagger = null;
+            _tagger?.Dispose();
+            _tagger = null;
+            _taggerReal= null;
+            _taggerVirtual = null;
             //if (SW->isFwRunning)
             //{
             //    ret = Swab_TimeTag_FileWriter_stop(SW->Fw, &SW->Except);
