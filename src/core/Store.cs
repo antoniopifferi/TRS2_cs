@@ -6,30 +6,30 @@ using System.Runtime.InteropServices;
 namespace TRS2 {
     public static class Store {
         private static byte[] header = new byte[Konst.HEAD_LEN];
-        private static string datafilepath = string.Empty;
+        public static string DataPath = string.Empty; // full path to data file
         private static FileStream? datafileobj;
 
         public static void Init() {
             var store = Set.Store;
-            datafilepath = Path.Combine(store.Fdir,$"{store.Prefix}{store.Tag:D4}.{store.Fext.TrimStart('.')}");
+            DataPath = Path.Combine(store.Fdir,$"{store.Prefix}{store.Tag:D4}.{store.Fext.TrimStart('.')}");
             try {
-                if (File.Exists(datafilepath)) {
-                    var answer = MessageBox.Show($"File already exists:\n{datafilepath}\n\nOverwrite?","TRS2",MessageBoxButton.YesNoCancel,MessageBoxImage.Question);
+                if (File.Exists(DataPath)) {
+                    var answer = MessageBox.Show($"File already exists:\n{DataPath}\n\nOverwrite?","TRS2",MessageBoxButton.YesNoCancel,MessageBoxImage.Question);
                     if (answer == MessageBoxResult.Cancel) return;
                     if (answer == MessageBoxResult.No) {
                         var name = Interaction.InputBox("Enter the new filename without directory or extension:","TRS2", $"{store.Prefix}{store.Tag:D4}");
                         if (string.IsNullOrWhiteSpace(name) || name != Path.GetFileName(name) || Path.HasExtension(name)) return;
-                        datafilepath = Path.Combine(store.Fdir,$"{name}.{store.Fext.TrimStart('.')}");
+                        DataPath = Path.Combine(store.Fdir,$"{name}.{store.Fext.TrimStart('.')}");
                         }
                     }
                 CompileHead();
-                datafileobj = new FileStream(datafilepath,FileMode.Create,FileAccess.Write,FileShare.Read);
+                datafileobj = new FileStream(DataPath,FileMode.Create,FileAccess.Write,FileShare.Read);
                 datafileobj.Write(header);
                 }
             catch {
-                MessageBox.Show($"Error in File = {datafilepath}","TRS2",MessageBoxButton.OK,MessageBoxImage.Error);
+                MessageBox.Show($"Error in File = {DataPath}","TRS2",MessageBoxButton.OK,MessageBoxImage.Error);
                 }
-            Display.Text("Initialised File: " + datafilepath);
+            Display.Text("Initialised File: " + DataPath);
             }
 
         public static void Save() {

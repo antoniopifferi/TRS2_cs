@@ -1,6 +1,7 @@
 ﻿using SwabianInstruments.TimeTagger;
 using System;
 using System.DirectoryServices;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Timers;
 using TypeData = System.UInt32; // 4 bytes
@@ -11,6 +12,7 @@ namespace TRS2
     {
         public const int SWAB_MAX_CHANN = 18; // max number of Swabian channels
         public const double SWAB_REPLAY_SPEED = 1.0; // replay speed for Virtual file
+        public const string SWAB_FILE_EXTENSION = "ttbin"; // file extension for Swabian Time Tagger files
 
         private Int64 _picoseconds=0;
         private bool _isFwRunning = false;
@@ -22,8 +24,10 @@ namespace TRS2
         private int[] _syncChannels; // Array to hold the sync channels
         private FrequencyMultiplier? _frequencyMultiplier=null;
         private int _freqMultChannel;
-        private Histogram[] _histogram = new Histogram[SWAB_MAX_CHANN];
-        private Correlation[] _correlation = new Correlation[SWAB_MAX_CHANN];
+        private Histogram?[] _histogram = new Histogram[Set.Spc.NumDet];
+        private Correlation?[] _correlation = new Correlation[Set.Spc.NumDet];
+        private SynchronizedMeasurements? _syncMeas = null; // multiple syncronised measurements that starts together
+        private FileWriter? _fileWriter = null;
         private Int64 _binwidth=(Int64)(Set.Spc.BinWidth+0.1);
         private int[][] _staging = []; // Staging buffer for data transfer [numDet][numBins]
 
@@ -35,6 +39,7 @@ namespace TRS2
             int numSyncChannels = 0;
 
             _staging = new int[Set.Spc.NumDet][]; // initialise the staging buffer for each detector
+            
             // complete channel arrays based on Set.Swab.Setting
             for (int ic = 0; ic < SWAB_MAX_CHANN; ic++)
             {
@@ -86,31 +91,53 @@ namespace TRS2
                 _freqMultChannel = _frequencyMultiplier.getChannel();
                 _syncChannels[0] = _freqMultChannel; // replace sync channel with frequency multiplied channel
             }
-            _histogram = new Histogram[Set.Spc.NumDet];
-            _correlation = new Correlation[Set.Spc.NumDet];
+
+            // create the syncronisedmeasurements
+            _syncMeas = new SynchronizedMeasurements(_tagger);
 
             // Create the measurements
             switch (Set.Swab.Meas)
             {
                 case "HIST":
-                    _histogram = new Histogram[Set.Spc.NumDet];
                     for (int id = 0; id < Set.Spc.NumDet; id++)
                         if (Set.Swab.Start == "SIGN")
-                            _histogram[id] = new Histogram(_tagger!, _syncChannels[0], _signChannels[id], _binwidth, Set.Spc.NumBins);
+                            _histogram[id] = new Histogram(_syncMeas.getTagger(), _syncChannels[0], _signChannels[id], _binwidth, Set.Spc.NumBins);
                         else
-                            _histogram[id] = new Histogram(_tagger!, _signChannels[id], _syncChannels[0], _binwidth, Set.Spc.NumBins);
+                            _histogram[id] = new Histogram(_syncMeas.getTagger(), _signChannels[id], _syncChannels[0], _binwidth, Set.Spc.NumBins);
                     break;
                 case "CORR":
-                    _correlation = new Correlation[Set.Spc.NumDet];
                     for (int id = 0; id < Set.Spc.NumDet; id++)
-                        _correlation[id] = new Correlation(_tagger!, _signChannels[id], _signChannels[id], _binwidth, Set.Spc.NumBins);
+                        _correlation[id] = new Correlation(_syncMeas.getTagger(), _signChannels[id], _signChannels[id], _binwidth, Set.Spc.NumBins);
                     break;
+            }
+
+            // initialise the File writer
+            if (Set.Swab.SaveTags)
+            {
+                string filePath = Store.DataPath; // use DataPath but replace extension with SWAB_FILE_EXTENSION
+                filePath = Path.ChangeExtension(filePath, SWAB_FILE_EXTENSION);
+                int[] channels = Set.Swab.Type switch
+                {
+                    "REAL" => _taggerReal!.getChannelList(),
+                    "VIRTUAL" => _taggerVirtual!.getChannelList(),
+                };
+                _fileWriter = new FileWriter(_syncMeas.getTagger(), filePath, channels);
             }
         }
 
         protected override void CloseDev()
         {
             _frequencyMultiplier?.Dispose(); _frequencyMultiplier = null;
+            _syncMeas?.Dispose(); _syncMeas = null;
+            _fileWriter?.Dispose(); _fileWriter = null;
+            for(int id = 0; id < Set.Spc.NumDet; id++)
+            {
+                _histogram[id]?.Dispose(); _histogram[id] = null;
+                _correlation[id]?.Dispose(); _correlation[id] = null;
+            }
+            _taggerReal?.Dispose(); _taggerReal = null;
+            _taggerVirtual?.Dispose(); _taggerVirtual = null;
+            _tagger?.Dispose(); _tagger = null;
             //if (SW->isFwRunning)
             //{
             //    ret = Swab_TimeTag_FileWriter_stop(SW->Fw, &SW->Except);
@@ -118,54 +145,55 @@ namespace TRS2
             //    ret = Swab_TimeTag_FileWriter_Dispose(SW->Fw, &SW->Except);
             //    if (ret < 0) ErrHandler(ERR_SWAB, (short)ret, "DISPOSE FILE WRITE");
             //}
-            switch(Set.Swab.Type)
-            {
-                case "REAL":
-                    _taggerReal?.Dispose(); _taggerReal = null;
-                    break;
-                case "VIRTUAL":
-                    _taggerVirtual?.Dispose(); _taggerVirtual = null;
-                    break;
-            }
-            _tagger?.Dispose(); _tagger = null;
+            //switch (Set.Swab.Type)
+            //{
+            //    case "REAL":
+            //        _taggerReal?.Dispose(); _taggerReal = null;
+            //        break;
+            //    case "VIRTUAL":
+            //        _taggerVirtual?.Dispose(); _taggerVirtual = null;
+            //}
+            //_tagger?.Dispose(); _tagger = null;
         }
 
         protected override void StartDev()
         {
-            switch(Set.Swab.Meas)
-            {
-                case "HIST":
-                    for (int id = 0; id < Set.Spc.NumDet; id++)
-                        _histogram[id].startFor(_picoseconds);
-                    break;
-                case "CORR":
-                    for (int id = 0; id < Set.Spc.NumDet; id++)
-                        _correlation[id].startFor(_picoseconds);
-                    break;
-            }
+            _syncMeas?.start();
+            //switch(Set.Swab.Meas)
+            //{
+            //    case "HIST":
+            //        for (int id = 0; id < Set.Spc.NumDet; id++)
+            //            _histogram[id].startFor(_picoseconds);
+            //        break;
+            //    case "CORR":
+            //        for (int id = 0; id < Set.Spc.NumDet; id++)
+            //            _correlation[id].startFor(_picoseconds);
+            //        break;
+            //}
         }
 
         protected override void StopDev()
         {
-            switch(Set.Swab.Meas)
-            {
-                case "HIST":
-                    for (int id = 0; id < Set.Spc.NumDet; id++)
-                        _histogram[id].stop();
-                    break;
-                case "CORR":
-                    for (int id = 0; id < Set.Spc.NumDet; id++)
-                        _correlation[id].stop();
-                    break;
-            }
+            _syncMeas?.stop();
+            //switch(Set.Swab.Meas)
+            //{
+            //    case "HIST":
+            //        for (int id = 0; id < Set.Spc.NumDet; id++)
+            //            _histogram[id].stop();
+            //        break;
+            //    case "CORR":
+            //        for (int id = 0; id < Set.Spc.NumDet; id++)
+            //            _correlation[id].stop();
+            //        break;
+            //}
 
-            if(_isFwRunning)
-            {
-                // stop file writer if it is running
-                // ret = Swab_TimeTag_FileWriter_stop(SW->Fw, &SW->Except);
-                // if (ret < 0) ErrHandler(ERR_SWAB, (short)ret, "STOP FILE WRITE");
-                _isFwRunning = false;
-            }
+            //if(_isFwRunning)
+            //{
+            //    // stop file writer if it is running
+            //    // ret = Swab_TimeTag_FileWriter_stop(SW->Fw, &SW->Except);
+            //    // if (ret < 0) ErrHandler(ERR_SWAB, (short)ret, "STOP FILE WRITE");
+            //    _isFwRunning = false;
+            //}
         }
 
         protected override void SetTimeDev(double seconds)
@@ -175,17 +203,18 @@ namespace TRS2
 
         protected override void WaitDev()
         {
-            switch (Set.Swab.Meas)
-            {
-                case "HIST":
-                    for (int id = 0; id < Set.Spc.NumDet; id++)
-                        _histogram[id].waitUntilFinished();
-                    break;
-                case "CORR":
-                    for (int id = 0; id < Set.Spc.NumDet; id++)
-                        _correlation[id].waitUntilFinished();
-                    break;
-            }
+            _syncMeas?.waitUntilFinished();
+            //switch (Set.Swab.Meas)
+            //{
+            //    case "HIST":
+            //        for (int id = 0; id < Set.Spc.NumDet; id++)
+            //            _histogram[id].waitUntilFinished();
+            //        break;
+            //    case "CORR":
+            //        for (int id = 0; id < Set.Spc.NumDet; id++)
+            //            _correlation[id].waitUntilFinished();
+            //        break;
+            //}
         }
 
         protected override void GetDev()
@@ -216,45 +245,6 @@ namespace TRS2
         }
     }
 }
-
-
-        ///* TRANSFER DATA FROM SWAB */	
-        //void GetDataSwab(void)
-        //{
-        //    int ret, id, ic;
-        //    ssize_t arraylen;
-        //    int* pData;
-
-        //    struct SwabS*SW = &P.Spc.Swab[0];  // NOT WORKINNG FOR MULTIPLE BOARDS
-
-        //for (int ib = 0; ib < P.Num.Board; ib++) // NOT WORKINNG FOR MULTIPLE BOARDS      
-        //    for (id = 0; id < P.Num.Det; id++)
-        //    {
-        //        switch (SW->Meas)
-        //        {
-        //            case SWAB_HIST:
-        //                ret = Swab_TimeTag_Histogram_getData(SW->Hist[id], &pData, &arraylen, &SW->Except);
-        //                break;
-        //            case SWAB_CORR:
-        //                ret = Swab_TimeTag_HistogramLogBins_getData(SW->Corr[id], &pData, &arraylen, &SW->Except);
-        //                //ret = Swab_TimeTag_HistogramLogBins_getDataNormalizedG2(SW->Corr[id], &pData, &arraylen, &SW->Except);
-        //                //ret=Swab_TimeTag_Correlation_getData(SW->Corr[id],&pData,&arraylen,&SW->Except);
-        //                break;
-        //        }
-        //        if (ret < 0) ErrHandler(ERR_SWAB, (short)ret, "GET DATA");
-        //        if (SW->Meas == SWAB_HIST)
-        //            for (ic = 0; ic < arraylen; ic++)
-        //                if (SW->Reverse)  // REVERSE DATA
-        //                    D.Buffer[ib][ic + id * P.Chann.Num] = (T_DATA)pData[arraylen - 1 - ic];
-        //                else
-        //                    D.Buffer[ib][ic + id * P.Chann.Num] = (T_DATA)pData[ic];
-        //        if (SW->Meas == SWAB_CORR)
-        //            for (ic = 0; ic < arraylen; ic++)
-        //                D.Buffer[ib][ic + id * P.Chann.Num] = (T_DATA)pData[ic];
-        //        //D.Buffer[ib][ic+id*P.Chann.Num]=(T_DATA) (pow(10,5*pData[ic]));
-        //        CDotNetFreeMemory(pData); // free memory of the allocated array
-        //    }
-        //	}
 
 
 

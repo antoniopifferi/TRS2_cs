@@ -67,8 +67,8 @@ namespace TRS2
         }
 
         public static void Measure() {
+            Store.Init();
             data = new Data();
-
             spc = Set.Spc.Type switch {
                 "TEST" => new SpcTest(),
                 "SWAB" => new SpcSwab(),
@@ -77,7 +77,6 @@ namespace TRS2
             spc?.Init();
 
             Display.Init();
-            Store.Init();
 
             //initSteps();
             //initSpc();
