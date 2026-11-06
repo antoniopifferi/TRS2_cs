@@ -49,7 +49,7 @@ namespace TRS2 {
                 public int Number { get; }
                 public string Channel => $"Channel{Number:00}";
                 [ObservableProperty] private string type = "NONE";
-                public double Level { get; set; }
+                public double Level { get; set; } = 0.0;
                 public int Delay { get; set; }
                 public int Deadtime { get; set; }
                 public int Hysteresis { get; set; } = 0;

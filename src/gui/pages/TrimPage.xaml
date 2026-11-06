@@ -133,9 +133,9 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTextColumn Header="Fraction" Binding="{Binding Fraction, UpdateSourceTrigger=PropertyChanged}" Width="80" />
-                    <DataGridTextColumn Header="Time" Binding="{Binding Time, UpdateSourceTrigger=PropertyChanged}" Width="75" />
-                    <DataGridTextColumn Header="Delta" Binding="{Binding Delta, UpdateSourceTrigger=PropertyChanged}" Width="75" />
+                    <DataGridTextColumn Header="Fraction" Binding="{Binding Fraction, UpdateSourceTrigger=LostFocus}" Width="80" />
+                    <DataGridTextColumn Header="Time" Binding="{Binding Time, UpdateSourceTrigger=LostFocus}" Width="75" />
+                    <DataGridTextColumn Header="Delta" Binding="{Binding Delta, UpdateSourceTrigger=LostFocus}" Width="75" />
                     <DataGridTextColumn Header="Num" Binding="{Binding Num, UpdateSourceTrigger=PropertyChanged}" Width="65" />
 
                     <DataGridTemplateColumn Header="Scan" Width="85">

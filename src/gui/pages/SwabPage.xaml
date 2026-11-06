@@ -52,7 +52,7 @@
                         <DataGridTemplateColumn Header="Type" Width="90">
                             <DataGridTemplateColumn.CellTemplate><DataTemplate><ComboBox SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Content"><ComboBoxItem Content="NONE" /><ComboBoxItem Content="SYNC" /><ComboBoxItem Content="SIGN" /></ComboBox></DataTemplate></DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="Level (V)" Binding="{Binding Level, UpdateSourceTrigger=PropertyChanged}" Width="90" />
+                        <DataGridTextColumn Header="Level (V)" Binding="{Binding Level, UpdateSourceTrigger=LostFocus}" Width="90" />
                         <DataGridTextColumn Header="Delay (ps)" Binding="{Binding Delay, UpdateSourceTrigger=PropertyChanged}" Width="90" />
                         <DataGridTextColumn Header="Deadtime (ps)" Binding="{Binding Deadtime, UpdateSourceTrigger=PropertyChanged}" Width="105" />
                         <DataGridTemplateColumn Header="Hysteresis" Width="100">

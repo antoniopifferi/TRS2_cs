@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace TRS2
 {
-    // NEW: Shared background-task startup and exception propagation.
+    // Shared background-task startup and exception propagation.
     // Not specific to SPC, TimeTagger, steppers, or trimmers.
     public static class Workers
     {
@@ -31,11 +31,7 @@ namespace TRS2
         // a long running task that generates an indepenedet thread
         public static Task StartLongRunning(Action action)
         {
-            Task task = Task.Factory.StartNew(
-                action,
-                CancellationToken.None,
-                TaskCreationOptions.LongRunning,
-                TaskScheduler.Default);
+            Task task = Task.Factory.StartNew(action,CancellationToken.None,TaskCreationOptions.LongRunning,TaskScheduler.Default);
 
             lock (sync)
             {
@@ -56,11 +52,10 @@ namespace TRS2
                 updated[i] = task;
                 Volatile.Write(ref tasks, updated);
             }
-
             return task;
         }
 
-        // NEW: Call on the measurement/consumer thread to rethrow worker errors.
+        // Call on the measurement/consumer thread to rethrow worker errors.
         // This method does not create or wait for any new thread.
         public static void ThrowIfFailed()
         {

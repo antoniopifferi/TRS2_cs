@@ -141,7 +141,7 @@
                                         Binding="{Binding FreqDelta, UpdateSourceTrigger=PropertyChanged}"
                                         Width="85" />
                     <DataGridTextColumn Header="Factor"
-                                        Binding="{Binding Factor, UpdateSourceTrigger=PropertyChanged}"
+                                        Binding="{Binding Factor, UpdateSourceTrigger=LostFocus}"
                                         Width="80" />
                     <DataGridCheckBoxColumn Header="Sort"
                                             Binding="{Binding Sort, UpdateSourceTrigger=PropertyChanged}"
