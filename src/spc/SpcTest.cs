@@ -62,5 +62,10 @@ namespace TRS2 {
         protected override void CopyDev(Span<TypeData> destination) {
             _staging.AsSpan().CopyTo(destination);
         }
+
+        protected override void ClearDev()
+        {
+            _staging.AsSpan().Clear();
+        }
     }
 }

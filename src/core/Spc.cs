@@ -64,5 +64,6 @@ namespace TRS2 {
         protected abstract void WaitDev();
         protected abstract void GetDev();
         protected abstract void CopyDev(Span<TypeData> destination);
+        protected abstract void ClearDev();
     }
 }

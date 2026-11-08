@@ -4,6 +4,7 @@ using System.DirectoryServices;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Timers;
+using System.Runtime.InteropServices;
 using TypeData = System.UInt32; // 4 bytes
 
 namespace TRS2
@@ -159,7 +160,7 @@ namespace TRS2
 
         protected override void StartDev()
         {
-            _syncMeas?.start();
+            _syncMeas?.startFor(_picoseconds);
             //switch(Set.Swab.Meas)
             //{
             //    case "HIST":
@@ -231,66 +232,31 @@ namespace TRS2
                 if(Set.Swab.Reverse)
                     Array.Reverse(_staging[id]);
             }
+        }
 
+        protected override void ClearDev()
+        {
+            for (int id = 0; id < Set.Spc.NumDet; id++)
+            {
+                switch (Set.Swab.Meas)
+                {
+                    case "HIST":
+                        _histogram[id].clear();
+                        break;
+                    case "CORR":
+                        _correlation[id].clear();
+                        break;
+                }
+            }
         }
 
         protected override void CopyDev(Span<TypeData> destination)
         {
             for (int id = 0; id < Set.Spc.NumDet; id++)
-            {
-                int[] source = _staging[id];
-                int offset = id * Set.Spc.NumBins;
-                for (int ic = 0; ic < source.Length; ic++)
-                    destination[offset + ic] = (TypeData)source[ic];
-            }
+                MemoryMarshal.Cast<int, TypeData>(_staging[id].AsSpan()).CopyTo(destination.Slice(id * Set.Spc.NumBins, Set.Spc.NumBins));
         }
     }
 }
-
-
-
-        ///* CLEAR SWAB */	
-        //void ClearSwab(void)
-        //{
-        //    int ret, id;
-
-        //    struct SwabS*SW = &P.Spc.Swab[0]; // NOT WORKINNG FOR MULTIPLE BOARDS      ;
-        //switch (SW->Meas)
-        //{
-        //    case SWAB_HIST:
-        //        for (id = 0; id < P.Num.Det; id++)
-        //            ret = Swab_TimeTag_Histogram_clear(SW->Hist[id], &SW->Except);
-        //        break;
-        //    case SWAB_CORR:
-        //        for (id = 0; id < P.Num.Det; id++)
-        //            //ret = Swab_TimeTag_Correlation_clear (SW->Corr[id], &SW->Except);
-        //            ret = Swab_TimeTag_HistogramLogBins_clear(SW->Corr[id], &SW->Except);
-        //        break;
-        //}
-        //if (ret < 0) ErrHandler(ERR_SWAB, (short)ret, "CLEAR");
-        //	}
-
-
-        ///* PAUSE SWAB */	
-        //void PauseSwab(int Board)
-        //{
-        //    int ret, id;
-
-        //    struct SwabS*SW = &P.Spc.Swab[Board];
-        //switch (SW->Meas)
-        //{
-        //    case SWAB_HIST:
-        //        for (id = 0; id < P.Num.Det; id++)
-        //            ret = Swab_TimeTag_Histogram_stop(SW->Hist[id], &SW->Except);
-        //        break;
-        //    case SWAB_CORR:
-        //        for (id = 0; id < P.Num.Det; id++)
-        //            //ret = Swab_TimeTag_Correlation_stop (SW->Corr[id], &SW->Except);
-        //            ret = Swab_TimeTag_HistogramLogBins_stop(SW->Corr[id], &SW->Except);
-        //        break;
-        //}
-        //if (ret < 0) ErrHandler(ERR_SWAB, (short)ret, "PAUSE");
-        //	}
 
 
 
