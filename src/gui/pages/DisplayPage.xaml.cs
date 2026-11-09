@@ -6,7 +6,7 @@ namespace TRS2
 {
     public partial class DisplayPage : Page
     {
-        private readonly double[] x = new double[Set.Spc.NumBins];
+        private double[] x = [];
         private readonly double[][] y = new double[Konst.MAX_CURVE][];
         private readonly Scatter?[] points = new Scatter?[Konst.MAX_CURVE];
 
@@ -50,6 +50,7 @@ namespace TRS2
             }
 
             PlotView.Plot.Clear();
+            x = new double[Run.data!.NumBins];
 
             for (int page = 0; page < points.Length; page++)
             {
@@ -57,7 +58,7 @@ namespace TRS2
                 y[page] = null!;
             }
 
-            numPages = Math.Min(Run.data!.NumPages, Konst.MAX_CURVE);
+            numPages = Math.Min(Run.data.NumPages, Konst.MAX_CURVE);
 
             for (int i = 0; i < x.Length; i++)
                 x[i] = i * Set.Spc.BinWidth;
