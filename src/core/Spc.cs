@@ -42,16 +42,12 @@ namespace TRS2 {
             while (running) {
                 WaitDev();
                 if (!running) break;
-
                 GetDev();
-
                 long n = Volatile.Read(ref data.Produced);
                 while (running && n - Volatile.Read(ref data.Consumed) >= data.NumAcq)
                     Thread.Yield();
-
                 if (!running) break;
-                StartDev();
-
+                RestartDev();
                 CopyDev(data.Ring((int)(n % data.NumAcq)));
                 Volatile.Write(ref data.Produced, n + 1);
             }
@@ -65,6 +61,7 @@ namespace TRS2 {
         protected abstract void WaitDev();
         protected abstract void GetDev();
         protected abstract void CopyDev(Span<TypeData> destination);
-        protected abstract void ClearDev();
+        protected virtual void ClearDev() { }
+        protected virtual void RestartDev() { }
     }
 }

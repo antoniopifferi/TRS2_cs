@@ -171,6 +171,11 @@ namespace TRS2
             //}
         }
 
+        protected override void RestartDev()
+        {
+            _syncMeas?.startFor(_picoseconds);
+        }
+
         protected override void StopDev()
         {
             _syncMeas?.stop();
