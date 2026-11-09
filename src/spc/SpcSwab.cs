@@ -4,7 +4,6 @@ using System.DirectoryServices;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Timers;
-using System.Runtime.InteropServices;
 using TypeData = System.UInt32; // 4 bytes
 
 namespace TRS2
@@ -78,11 +77,10 @@ namespace TRS2
             }
             else if (Set.Swab.Type == "VIRTUAL")
             {
-                _tagger = TT.createTimeTaggerVirtual();
+                _tagger = TT.createTimeTaggerVirtual(Set.Swab.FileVirt);
                 _taggerVirtual = (TimeTaggerVirtual)_tagger; // Cast to TimeTaggerVirtual for virtual device
                 Display.Text("Virtual Time Tagger created...", false);
-                _taggerVirtual.setReplaySpeed(SWAB_REPLAY_SPEED);
-                _taggerVirtual.replay(Set.Swab.FileVirt);
+                _taggerVirtual.run(SWAB_REPLAY_SPEED);
             }
 
             if (Set.Swab.FrequencyMultiplier > 1)
@@ -136,10 +134,9 @@ namespace TRS2
                 _histogram[id]?.Dispose(); _histogram[id] = null;
                 _correlation[id]?.Dispose(); _correlation[id] = null;
             }
-            _tagger?.Dispose();
-            _tagger = null;
-            _taggerReal= null;
-            _taggerVirtual = null;
+            _taggerReal?.Dispose(); _taggerReal = null;
+            _taggerVirtual?.Dispose(); _taggerVirtual = null;
+            _tagger?.Dispose(); _tagger = null;
             //if (SW->isFwRunning)
             //{
             //    ret = Swab_TimeTag_FileWriter_stop(SW->Fw, &SW->Except);
@@ -160,7 +157,7 @@ namespace TRS2
 
         protected override void StartDev()
         {
-            _syncMeas?.startFor(_picoseconds);
+            _syncMeas?.startFor(_picoseconds,true);
             //switch(Set.Swab.Meas)
             //{
             //    case "HIST":
@@ -253,7 +250,12 @@ namespace TRS2
         protected override void CopyDev(Span<TypeData> destination)
         {
             for (int id = 0; id < Set.Spc.NumDet; id++)
-                MemoryMarshal.Cast<int, TypeData>(_staging[id].AsSpan()).CopyTo(destination.Slice(id * Set.Spc.NumBins, Set.Spc.NumBins));
+            {
+                int[] source = _staging[id];
+                int offset = id * Set.Spc.NumBins;
+                for (int ic = 0; ic < source.Length; ic++)
+                    destination[offset + ic] = (TypeData)source[ic];
+            }
         }
     }
 }

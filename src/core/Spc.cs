@@ -50,6 +50,7 @@ namespace TRS2 {
                     Thread.Yield();
 
                 if (!running) break;
+                StartDev();
 
                 CopyDev(data.Ring((int)(n % data.NumAcq)));
                 Volatile.Write(ref data.Produced, n + 1);
