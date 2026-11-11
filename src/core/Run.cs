@@ -90,6 +90,7 @@ namespace TRS2
             for (int iS = 0; iS < Konst.MAX_STEP; iS++) {
                 step[iS] = Set.Step[iS].Type switch {
                     "TEST" => new StepTest(iS),
+                    "MICRO" => new StepMicro(iS),
                     "NONE" => null
                 };
             }

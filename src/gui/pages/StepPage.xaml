@@ -12,7 +12,7 @@
                   CanContentScroll="False">
 
         <GroupBox Header="Stepper" Margin="4">
-            <DataGrid ItemsSource="{Binding Steps}"
+            <DataGrid ItemsSource="{Binding Step}"
                       AutoGenerateColumns="False"
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"
@@ -34,7 +34,8 @@
                                 <ComboBox SelectedValue="{Binding Type, UpdateSourceTrigger=PropertyChanged}"
                                           SelectedValuePath="Content">
                                     <ComboBoxItem Content="NONE" />
-                                    <ComboBoxItem Content="MANNY" />
+                                    <ComboBoxItem Content="TEST" />
+                                    <ComboBoxItem Content="MICRO" />
                                     <ComboBoxItem Content="ARD_STE" />
                                     <ComboBoxItem Content="ARD_FLO" />
                                     <ComboBoxItem Content="MICRO2" />
