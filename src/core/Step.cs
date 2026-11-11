@@ -19,6 +19,8 @@ namespace TRS2 {
         public double FreqActual { get; private set; }
         public long Actual { get { lock (io) return TellPosDev(); } }
 
+        //public static int NumSteps;
+
         protected Step(int index) { iS = index; }
 
         public void Init() {

@@ -10,10 +10,13 @@ namespace TRS2
 	{
         public static Data? data;
         private static Spc? spc;
+        private static Step?[] step=new Step?[Konst.MAX_STEP];
+
+        public static void MarkSpcTrash() { if (spc != null) spc.isTrash = true; }
 
         private static class Action {
             public static bool Oscill;
-            public static bool moveStep;
+            public static bool[] moveStep = new bool[Konst.MAX_STEP];
             public static bool startSpc;
             public static bool stopSpc;
             public static bool copyArchive;
@@ -38,6 +41,10 @@ namespace TRS2
             Action.copyArchive = true;
             //Action.copyTemp = true;
             Action.displayPlot = true;
+            for(int iS = 0; iS < Konst.MAX_STEP; iS++)
+            {
+                Action.moveStep[iS] = newloop[Set.Step[iS].Loop];
+            }
         }
 
         private static void loopGet(int loop) {
@@ -79,6 +86,14 @@ namespace TRS2
             spc?.Init();
             Display.Init();
 
+            //Step.NumSteps=Set.Step.Count(s => s.Type != "NONE");
+            for (int iS = 0; iS < Konst.MAX_STEP; iS++) {
+                step[iS] = Set.Step[iS].Type switch {
+                    "TEST" => new StepTest(iS),
+                    "NONE" => null
+                };
+            }
+
             Oscill();
             Display.Text("Measurement started");
             int loop = 0;
@@ -89,6 +104,13 @@ namespace TRS2
                 Display.Text("Loop " + loop + " started");
                 loopGet(loop);
                 decideAction();
+
+                for (int iS = 0; iS < Konst.MAX_STEP; iS++)
+                    if (Action.moveStep[iS])
+                    {
+                        long goal = Set.Loop[Set.Step[iS].Loop].Actual*step[iS].Delta;
+                        step[iS]?.Move(goal,true);
+                    }
 
                 if (Action.Oscill) Oscill();
                 if (Action.startSpc) spc?.Start(Set.Spc.TimeMeas);
