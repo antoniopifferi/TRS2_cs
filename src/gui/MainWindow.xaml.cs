@@ -96,6 +96,7 @@ namespace TRS2 {
         private async void RunMeasure(object sender, RoutedEventArgs e) {
             MainFrame.Navigate(DisplayPage);
             await Task.Run(Run.Measure);
-            }
+            MainFrame.Navigate(ParmPage);
         }
+    }
 }

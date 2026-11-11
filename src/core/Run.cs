@@ -2,6 +2,7 @@
 using System.Diagnostics.Metrics;
 using System.Windows;
 using System.Diagnostics;
+using System.Threading;
 
 namespace TRS2
 {
@@ -72,18 +73,14 @@ namespace TRS2
             spc = Set.Spc.Type switch {
                 "TEST" => new SpcTest(),
                 "SWAB" => new SpcSwab(),
-                "NONE" => null // No SPC device selected, do nothing
+                "NONE" => null
             };
-            spc?.Init();
 
+            spc?.Init();
             Display.Init();
 
-            //initSteps();
-            //initSpc();
-            //InitDataFile();
-
             Oscill();
-
+            Display.Text("Measurement started");
             int loop = 0;
             //bool status = false;
 
@@ -111,15 +108,7 @@ namespace TRS2
             spc?.Close();
             Store.Close();
             Display.Text("Measurement finished");
-
-            //// Close file if needed
-            //// stop all thread before closing Data
-
-            //spc[0]->close();
-            //CloseDataFile();
-            //closeData();
-
-            //GUI->displayPanel("Parm");
+            Thread.Sleep(1000);
         }
     }
 }

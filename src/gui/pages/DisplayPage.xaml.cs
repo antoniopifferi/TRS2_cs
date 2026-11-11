@@ -49,6 +49,8 @@ namespace TRS2
                 return;
             }
 
+            initialized = false;
+            //DisplayText.Clear();
             PlotView.Plot.Clear();
             x = new double[Run.data!.NumBins];
 
@@ -115,7 +117,8 @@ namespace TRS2
                 return;
             }
 
-            if (!initialized) InitDisplay();
+            if (!initialized)
+                return;
 
             ReadOnlySpan<uint> values = data.Span;
 
@@ -125,7 +128,6 @@ namespace TRS2
                 {
                     double[] pageY = y[page]!;
                     int offset = page * x.Length;
-
                     int count = offset < values.Length ? Math.Min(x.Length, values.Length - offset) : 0;
 
                     for (int i = 0; i < count; i++)
@@ -134,7 +136,8 @@ namespace TRS2
                         pageY[i] = value > 0 ? Math.Log10(value) : double.NaN;
                     }
 
-                    for (int i = count; i < pageY.Length; i++) pageY[i] = double.NaN;
+                    for (int i = count; i < pageY.Length; i++)
+                        pageY[i] = double.NaN;
                 }
             }
 
